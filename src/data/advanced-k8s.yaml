@@ -1,0 +1,9 @@
+title: "Kubernetes Fundamentals"
+description: "An interactive workshop on Kubernetes fundamentals"
+image: "kubernetes"
+author: "GrahamDumpleton"
+date_created: "2024-07-12"
+labels: ["kubernetes", "fundamentals"]
+url: "https://github.com/educates/lab-k8s-fundamentals/releases/latest/download/workshop.yaml"
+version: "7.4"
+release_notes: "Updating for new repository location" 

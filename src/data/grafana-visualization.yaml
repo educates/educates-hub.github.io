@@ -1,0 +1,9 @@
+title: "Grafana Visualization"
+description: "Visualize metrics and logs with Grafana dashboards."
+image: "grafana"
+author: "Sofia Garcia"
+date_created: "2024-06-22"
+labels: ["grafana", "monitoring", "visualization"]
+url: "https://github.com/educates/workshops/grafana-visualization"
+version: "1.0.1"
+release_notes: "Added new dashboard templates." 

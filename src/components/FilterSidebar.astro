@@ -1,0 +1,19 @@
+---
+const { allLabels } = Astro.props;
+---
+<aside class="col-12 col-md-3 mb-4 mb-md-0">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="h6 fw-bold text-primary mb-3">Filter by Label</h2>
+      <button id="clearFilters" class="btn btn-outline-secondary btn-sm mb-3 w-100">Clear All</button>
+      <div class="d-flex flex-column gap-2">
+        {allLabels.map((label: string) => (
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value={label} id={`label-${label}`} />
+            <label class="form-check-label text-secondary" for={`label-${label}`}>{label}</label>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</aside> 

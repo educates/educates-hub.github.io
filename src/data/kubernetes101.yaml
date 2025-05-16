@@ -1,0 +1,9 @@
+title: "Kubernetes 101"
+description: "Introductory workshop for Kubernetes basics."
+image: "kubernetes"
+author: "Jane Doe"
+date_created: "2024-06-01"
+labels: ["kubernetes", "beginner"]
+url: "https://github.com/educates/workshops/k8s101"
+version: "1.0.0"
+release_notes: "Initial release." 

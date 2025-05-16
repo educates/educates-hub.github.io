@@ -1,0 +1,27 @@
+---
+import Topbar from '../components/Topbar.astro';
+import Footer from '../components/Footer.astro';
+const { title = 'EducatesHub - Workshop Catalog', description = 'Browse and discover Educates workshops.' } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+      html { font-family: system-ui, Inter, Roboto, Arial, sans-serif; }
+      .fade-in { animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1); }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none; } }
+    </style>
+  </head>
+  <body class="min-vh-100 d-flex flex-column bg-light">
+    <Topbar />
+    <slot />
+    <Footer />
+  </body>
+</html> 

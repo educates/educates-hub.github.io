@@ -1,0 +1,9 @@
+title: "Tekton CI/CD"
+description: "Build CI/CD pipelines for Kubernetes using Tekton."
+image: "tekton"
+author: "Liam Nguyen"
+date_created: "2024-06-20"
+labels: ["tekton", "ci", "cd", "kubernetes"]
+url: "https://github.com/educates/workshops/tekton-ci"
+version: "1.0.0"
+release_notes: "Initial Tekton CI/CD workshop." 

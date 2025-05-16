@@ -1,0 +1,9 @@
+title: "GitOps with Argo CD"
+description: "Implement GitOps workflows using Argo CD in Kubernetes."
+image: "argo"
+author: "Carlos Rivera"
+date_created: "2024-06-12"
+labels: ["gitops", "argo-cd", "kubernetes", "cd"]
+url: "https://github.com/educates/workshops/gitops-argo"
+version: "1.0.2"
+release_notes: "Added new GitOps deployment strategies." 

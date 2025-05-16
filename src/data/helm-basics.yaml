@@ -1,0 +1,9 @@
+title: "Helm Basics"
+description: "Introduction to Helm for Kubernetes package management."
+image: "helm"
+author: "Emily Zhang"
+date_created: "2024-06-15"
+labels: ["helm", "kubernetes", "beginner"]
+url: "https://github.com/educates/workshops/helm-basics"
+version: "1.0.0"
+release_notes: "First release." 
