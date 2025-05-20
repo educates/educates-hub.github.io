@@ -1,9 +1,0 @@
-title: "NGINX Ingress Controller"
-description: "Configure and use NGINX as an ingress controller in Kubernetes."
-image: "nginx"
-author: "Olga Ivanova"
-date_created: "2024-06-28"
-labels: ["nginx", "ingress", "kubernetes", "networking"]
-url: "https://github.com/educates/workshops/nginx-ingress"
-version: "1.0.0"
-release_notes: "Initial NGINX Ingress Controller workshop." 

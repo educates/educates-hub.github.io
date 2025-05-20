@@ -1,9 +1,0 @@
-title: "Prometheus Monitoring"
-description: "Learn how to monitor Kubernetes clusters with Prometheus."
-image: "prometheus"
-author: "Alice Brown"
-date_created: "2024-06-10"
-labels: ["monitoring", "prometheus", "kubernetes"]
-url: "https://github.com/educates/workshops/prometheus-monitoring"
-version: "1.1.0"
-release_notes: "Updated for Prometheus Operator." 

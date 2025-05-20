@@ -3,6 +3,7 @@
 EducatesHub is a static site built with [Astro](https://astro.build/) and TypeScript that catalogs and showcases Educates Workshops. It provides a searchable, filterable, and visually rich interface inspired by ArtifactHub, with Educates branding and a responsive Bootstrap 5 UI.
 
 ## Features
+
 - **Browse Workshops:** View a curated list of Educates YAML workshop definitions.
 - **Search & Filter:** Instantly search and filter workshops by title, description, and labels.
 - **Workshop Details:** See detailed info, release notes, and install instructions for each workshop.
@@ -11,6 +12,7 @@ EducatesHub is a static site built with [Astro](https://astro.build/) and TypeSc
 - **About Page & Footer:** Includes project info, links, and a persistent footer.
 
 ## Project Structure
+
 ```
 /
 ├── public/           # Static assets (images, favicon, etc.)
@@ -22,7 +24,7 @@ EducatesHub is a static site built with [Astro](https://astro.build/) and TypeSc
 │   └── utils/        # Data loader utilities
 ├── package.json      # Project dependencies and scripts
 ├── astro.config.mjs  # Astro configuration
-└── Dockerfile        # (You can add this for container builds)
+└── Dockerfile        # Containerizing the app
 ```
 
 ## Getting Started (Locally)
@@ -32,9 +34,11 @@ EducatesHub is a static site built with [Astro](https://astro.build/) and TypeSc
    npm install
    ```
 2. **Run the dev server:**
+
    ```sh
    npm run dev
    ```
+
    The site will be available at [http://localhost:4321](http://localhost:4321) by default.
 
 3. **Build for production:**
@@ -50,21 +54,24 @@ EducatesHub is a static site built with [Astro](https://astro.build/) and TypeSc
 
 1. **Build the Docker image:**
    ```sh
-   docker buildx build -t educates-hub .
+   docker buildx build --platform linux/amd64,linux/arm64 -t educates-hub .
    ```
 2. **Run the container:**
    ```sh
-   docker run -p 4321:4321 educates-hub
+   docker run -it --rm -p 4321:4321 educates-hub
    ```
 3. **Open your browser:**
    Visit [http://localhost:4321](http://localhost:4321)
 
 ## Customizing Workshops
+
 - Add or edit YAML files in `src/data/` to update the workshop catalog.
 - Images referenced in YAML should be placed in `public/images/` or mapped in the loader utility.
 
 ## Contributing
+
 Pull requests and issues are welcome! See the About page or visit [educates.dev](https://educates.dev) for more info.
 
 ## License
+
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) or as specified by the Educates project.

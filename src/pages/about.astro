@@ -1,15 +1,33 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from "../layouts/MainLayout.astro";
 ---
+
 <MainLayout title="About | EducatesHub">
   <section class="container py-5 fade-in">
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <h1 class="fw-bold text-primary mb-3">About EducatesHub</h1>
-        <p class="lead">EducatesHub is a community-driven catalog of <strong>Educates Workshops</strong>, making it easy to discover, search, and install hands-on Kubernetes training content.</p>
+        <p class="lead">
+          EducatesHub is a community-driven catalog of <strong
+            >Educates Workshops</strong
+          >, making it easy to discover, search, and install hands-on Kubernetes
+          training content.
+        </p>
         <hr />
         <h2 class="h4 mt-4">What is Educates?</h2>
-        <p>Educates is an open-source platform for building and running interactive Kubernetes workshops, training, and demos. It provides a consistent, reproducible environment for learning and sharing cloud-native skills.</p>
+        <p>
+          <strong
+            ><a
+              href="https://educates.dev"
+              target="_blank"
+              rel="noopener noreferrer">Educates</a
+            ></strong
+          > is an open-source platform for building and running interactive Kubernetes
+          workshops, training, and demos. It provides a consistent, reproducible
+          environment for learning and sharing cloud-native skills.
+        </p>
+        <h2 class="h4 mt-4">What can you do with EducatesHub?</h2>
+        <p>Here, you will be able to:</p>
         <ul>
           <li>Browse curated workshops and training scenarios</li>
           <li>Filter by topic, labels, and search keywords</li>
@@ -17,12 +35,38 @@ import MainLayout from '../layouts/MainLayout.astro';
         </ul>
         <h2 class="h4 mt-4">Learn More</h2>
         <ul>
-          <li><a href="https://educates.dev" target="_blank" rel="noopener noreferrer">educates.dev</a> &mdash; Official Educates website</li>
-          <li><a href="https://github.com/educates/educates-training-platform" target="_blank" rel="noopener noreferrer">Educates on GitHub</a></li>
+          <li>
+            <a
+              href="https://educates.dev"
+              target="_blank"
+              rel="noopener noreferrer">educates.dev</a
+            > &mdash; Official Educates website
+          </li>
+          <li>
+            <a
+              href="https://github.com/educates/educates-training-platform"
+              target="_blank"
+              rel="noopener noreferrer">Educates GitHub Repository</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://docs.educates.dev"
+              target="_blank"
+              rel="noopener noreferrer">Educates Documentation</a
+            >
+          </li>
         </ul>
         <h2 class="h4 mt-4">Contributing</h2>
-        <p>Want to add your own workshop? <a href="https://github.com/educates/educates-training-platform" target="_blank" rel="noopener noreferrer">Contribute on GitHub</a> or reach out to the community!</p>
+        <!-- TODO: Add a link to the GitHub repository -->
+        <p>
+          Want to add your own workshop? <a
+            href="https://github.com/educates/educates-training-platform"
+            target="_blank"
+            rel="noopener noreferrer">Contribute on GitHub</a
+          > or reach out to the community!
+        </p>
       </div>
     </div>
   </section>
-</MainLayout> 
+</MainLayout>

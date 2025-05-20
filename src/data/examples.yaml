@@ -1,0 +1,106 @@
+title: GitOps with Argo CD
+description: Implement GitOps workflows using Argo CD in Kubernetes.
+image: argo
+author: Carlos Rivera
+date_created: 2024-06-12
+labels:
+  - gitops
+  - kubernetes
+url: https://github.com/educates/workshops/gitops-argo
+version: 1.0.2
+release_notes: Added new GitOps deployment strategies.
+---
+title: Grafana Visualization
+description: Visualize metrics and logs with Grafana dashboards.
+image: grafana
+author: Sofia Garcia
+date_created: 2024-06-22
+labels:
+  - monitoring
+url: https://github.com/educates/workshops/grafana-visualization
+version: 1.0.1
+release_notes: Added new dashboard templates.
+---
+title: Helm Basics
+description: Introduction to Helm for Kubernetes package management.
+image: helm
+author: Emily Zhang
+date_created: 2024-06-15
+labels:
+  - kubernetes
+  - beginner
+url: https://github.com/educates/workshops/helm-basics
+version: 1.0.0
+release_notes: First release.
+---
+title: Istio Service Mesh
+description: Explore service mesh concepts and Istio features in Kubernetes.
+image: istio
+author: Priya Patel
+date_created: 2024-06-18
+labels:
+  - service-mesh
+  - kubernetes
+url: https://github.com/educates/workshops/istio-service-mesh
+version: 1.2.0
+release_notes: Added traffic management labs.
+---
+title: Kubernetes 101
+description: Introductory workshop for Kubernetes basics.
+image: kubernetes
+author: Jane Doe
+date_created: 2024-06-01
+labels:
+  - kubernetes
+  - beginner
+url: https://github.com/educates/workshops/k8s101
+version: 1.0.0
+release_notes: Initial release.
+---
+title: NGINX Ingress Controller
+description: Configure and use NGINX as an ingress controller in Kubernetes.
+image: nginx
+author: Olga Ivanova
+date_created: 2024-06-28
+labels:
+  - ingress
+  - kubernetes
+url: https://github.com/educates/workshops/nginx-ingress
+version: 1.0.0
+release_notes: Initial NGINX Ingress Controller workshop.
+---
+title: PostgreSQL on Kubernetes
+description: Deploy and manage PostgreSQL databases in Kubernetes.
+image: postgresql
+author: Miguel Torres
+date_created: 2024-06-25
+labels:
+  - database
+  - kubernetes
+url: https://github.com/educates/workshops/postgresql-k8s
+version: 1.0.0
+release_notes: Initial PostgreSQL on Kubernetes workshop.
+---
+title: Prometheus Monitoring
+description: Learn how to monitor Kubernetes clusters with Prometheus.
+image: prometheus
+author: Alice Brown
+date_created: 2024-06-10
+labels:
+  - monitoring
+  - kubernetes
+url: https://github.com/educates/workshops/prometheus-monitoring
+version: 1.1.0
+release_notes: Updated for Prometheus Operator.
+---
+title: Tekton CI/CD
+description: Build CI/CD pipelines for Kubernetes using Tekton.
+image: tekton
+author: Liam Nguyen
+date_created: 2024-06-20
+labels:
+  - ci/cd
+  - kubernetes
+url: https://github.com/educates/workshops/tekton-ci
+version: 1.0.0
+release_notes: Initial Tekton CI/CD workshop.

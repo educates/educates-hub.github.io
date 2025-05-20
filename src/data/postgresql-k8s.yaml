@@ -1,9 +1,0 @@
-title: "PostgreSQL on Kubernetes"
-description: "Deploy and manage PostgreSQL databases in Kubernetes."
-image: "postgresql"
-author: "Miguel Torres"
-date_created: "2024-06-25"
-labels: ["postgresql", "database", "kubernetes"]
-url: "https://github.com/educates/workshops/postgresql-k8s"
-version: "1.0.0"
-release_notes: "Initial PostgreSQL on Kubernetes workshop." 

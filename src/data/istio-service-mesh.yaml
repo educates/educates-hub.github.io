@@ -1,9 +1,0 @@
-title: "Istio Service Mesh"
-description: "Explore service mesh concepts and Istio features in Kubernetes."
-image: "istio"
-author: "Priya Patel"
-date_created: "2024-06-18"
-labels: ["istio", "service-mesh", "kubernetes", "networking"]
-url: "https://github.com/educates/workshops/istio-service-mesh"
-version: "1.2.0"
-release_notes: "Added traffic management labs." 

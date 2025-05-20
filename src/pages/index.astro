@@ -1,72 +1,15 @@
 ---
-import { loadWorkshops } from '../utils/loadWorkshops';
-import WorkshopTile from '../components/WorkshopTile.astro';
-import MainLayout from '../layouts/MainLayout.astro';
-import FilterSidebar from '../components/FilterSidebar.astro';
+import { loadWorkshops } from "../utils/loadWorkshops";
+import MainLayout from "../layouts/MainLayout.astro";
+import WorkshopGrid from "../components/WorkshopGrid.jsx";
 const workshops = await loadWorkshops();
-const allLabels = Array.from(new Set(workshops.flatMap(w => w.labels || [])));
-const workshopsAsJSON = JSON.stringify(workshops);
 ---
-<MainLayout title="EducatesHub - Workshop Catalog" description="Browse and discover Educates workshops.">
-	<div class="container py-4">
-		<div class="row">
-			<FilterSidebar allLabels={allLabels} />
-			<section class="col-12 col-md-9">
-				<div class="mb-3">
-					<input id="searchInput" type="text" placeholder="Search workshops..." class="form-control form-control-lg" />
-				</div>
-				<div id="data-container" data-workshops={workshopsAsJSON}></div>
-				<div id="workshopGrid" class="row g-4">
-					{workshops.map(workshop => (
-						<div class="col-12 col-md-6 d-flex">
-							<WorkshopTile workshop={workshop} class="fade-in w-100" />
-						</div>
-					))}
-				</div>
-				<script client:load>
-					const data = document.getElementById('data-container');
-					const workshops = JSON.parse(data.dataset.workshops);
-					const searchInput = document.getElementById('searchInput');
-					const checkboxes = Array.from(document.querySelectorAll('.form-check-input'));
-					const grid = document.getElementById('workshopGrid');
-					const clearBtn = document.getElementById('clearFilters');
 
-					function render(filtered) {
-						grid.innerHTML = '';
-						filtered.forEach(workshop => {
-							const div = document.createElement('div');
-							div.className = 'col-12 col-md-6 d-flex';
-							div.innerHTML = `<a href='/${workshop.slug}' class='text-decoration-none fade-in w-100'><div class=\"card h-100 shadow-sm border-primary border-opacity-10 transition-transform\" style=\"transition: box-shadow 0.2s, transform 0.2s;\"><img src=\"${workshop.image}\" alt=\"${workshop.title}\" class=\"card-img-top bg-light p-3\" style=\"height: 140px; object-fit: contain;\" /><div class=\"card-body d-flex flex-column\"><h2 class=\"card-title h6 text-primary fw-bold mb-2\">${workshop.title}</h2><p class=\"card-text text-secondary small mb-2\">${workshop.description}</p><div class=\"mb-2\">${(workshop.labels||[]).map(label => `<span class=\"badge bg-primary bg-opacity-10 text-primary fw-normal me-1 mb-1\">${label}</span>`).join('')}</div><div class=\"text-muted small mt-auto\">By ${workshop.author}</div></div></div></a>`;
-							grid.appendChild(div);
-						});
-					}
-
-					function filterWorkshops() {
-						const query = searchInput.value.toLowerCase();
-						const selected = checkboxes.filter(cb => cb.checked).map(cb => cb.value.toLowerCase());
-						let filtered = workshops.filter(w => {
-							const labels = (w.labels || []).map(lbl => lbl.toLowerCase());
-							const matches = selected.length === 0 || selected.every(l => labels.includes(l));
-							return (
-								(w.title.toLowerCase().includes(query) || w.description.toLowerCase().includes(query)) &&
-								matches
-							);
-						});
-						render(filtered);
-					}
-
-					searchInput.addEventListener('input', filterWorkshops);
-					checkboxes.forEach(cb => cb.addEventListener('change', filterWorkshops));
-
-					if (clearBtn) {
-						clearBtn.addEventListener('click', () => {
-							checkboxes.forEach(cb => (cb.checked = false));
-							searchInput.value = '';
-							render(workshops);
-						});
-					}
-				</script>
-			</section>
-		</div>
-	</div>
+<MainLayout
+  title="EducatesHub - Workshop Catalog"
+  description="Browse and discover Educates workshops."
+>
+  <div class="container-fluid py-4" style="max-width: 2000px;">
+    <WorkshopGrid client:load workshops={workshops} />
+  </div>
 </MainLayout>
