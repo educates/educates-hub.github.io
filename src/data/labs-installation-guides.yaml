@@ -1,63 +1,81 @@
 ---
+type: Workshop
 title: Installing Educates
 slug: installing-educates-cli
 description: Installing Educates using the CLI
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-installation-guides
+workshop_definition_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase
   - installation-guides
 ---
+type: Workshop
 title: Installing Educates
 slug: installing-educates-carvel
 description:  installing Educates using kapp-controller
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-installation-guides
+workshop_definition_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase
   - installation-guides
 ---
+type: Workshop
 title: Installing Educates Lookup Service
 slug: installing-educates-lookup-service
 description: Installing Educates Lookup Service
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-installation-guides
+workshop_definition_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase
   - installation-guides
   - lookup-service
 ---
+type: Workshop
 title: Installing Educates standalone Lookup Service
 slug: installing-educates-standalone-lookup-service
 description: Installing Educates standalone Lookup Service
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-installation-guides
+workshop_definition_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase
   - installation-guides
   - lookup-service
 ---
+type: Workshop
 title: Lookup Service Configuration
 slug: lookup-service-configuration
 description: Configuring the Educates lookup service
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-installation-guides
+workshop_definition_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase
   - installation-guides
   - lookup-service
 ---
+type: Workshop
 title: Lookup Service Usage
 slug: lookup-service-usage
 description: Using the Educates lookup service
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-installation-guides
+workshop_definition_url: https://github.com/educates/labs-installation-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase
   - lookup-service

@@ -1,152 +1,32 @@
 ---
-import { loadWorkshops } from "../utils/loadWorkshops";
+import { loadEducatesResources } from "../utils/loadWorkshops";
+import type { EducatesResourceBase } from "../utils/loadWorkshops";
 import MainLayout from "../layouts/MainLayout.astro";
+import WorkshopDetail from '../components/WorkshopDetail.jsx';
+import ExtensionPackageDetail from '../components/ExtensionPackageDetail.jsx';
 
 export async function getStaticPaths() {
-  const workshops = await loadWorkshops();
-  return workshops.map((w) => ({
-    params: { slug: w.slug },
+  const resources = await loadEducatesResources();
+  return resources.map((r) => ({
+    params: { slug: r.slug },
   }));
 }
 
 const { slug } = Astro.params;
-const workshops = await loadWorkshops();
-const workshop = workshops.find((w) => w.slug === slug);
-if (!workshop) {
-  throw new Error("Workshop not found");
+const resources = await loadEducatesResources();
+const resource: EducatesResourceBase | undefined = resources.find((r) => r.slug === slug);
+if (!resource) {
+  throw new Error("Resource not found");
 }
 ---
 
 <MainLayout
-  title={`${workshop.title} - EducatesHub`}
-  description={workshop.description}
+  title={`${resource.title} - EducatesHub - ${resource.type}`}
+  description={resource.description}
 >
-  <div class="container-fluid py-4" style="max-width: 2000px;">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-10">
-        <div class="card shadow-lg border-primary border-opacity-10 fade-in">
-          <div class="row g-0 align-items-center">
-            <div class="col-md-4 text-center p-4">
-              <img
-                src={workshop.image}
-                alt={workshop.title}
-                class="img-fluid bg-light rounded mb-3"
-                style="max-height: 180px; object-fit: contain;"
-              />
-            </div>
-            <div class="col-md-8">
-              <div class="card-body d-flex flex-column h-100">
-                <h2 class="card-title h4 text-primary fw-bold mb-2">
-                  {workshop.title}
-                </h2>
-                <div class="mb-2">
-                  {
-                    workshop.labels &&
-                      workshop.labels.map((label: string) => (
-                        <span class="badge bg-primary bg-opacity-10 text-primary fw-normal me-1 mb-1">
-                          {label}
-                        </span>
-                      ))
-                  }
-                </div>
-                <p class="card-text text-secondary mb-2">
-                  {workshop.description}
-                </p>
-                <div class="text-muted small mb-1">
-                  By {workshop.author} • Created {workshop.date_created}
-                </div>
-                <div class="text-muted small mb-1">
-                  Version: {workshop.version}
-                </div>
-                <div class="mt-3">
-                  <h3 class="h6 text-primary mb-1">Release Notes</h3>
-                  <div class="bg-light border rounded p-3 small text-secondary">
-                    {workshop.release_notes}
-                  </div>
-                </div>
-                <div class="mt-4 d-flex gap-3">
-                  <a href={workshop.url} target="_blank" class="btn btn-primary"
-                    >View Source</a
-                  >
-                  <button id="installBtn" class="btn btn-success"
-                    >Install</button
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal -->
-    <div
-      id="installModal"
-      class="modal fade"
-      tabindex="-1"
-      aria-labelledby="installModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-primary border-2">
-          <div class="modal-header">
-            <h5 class="modal-title text-primary" id="installModalLabel">
-              Install Instructions
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <span class="fw-semibold">Helm Install Command</span>
-              <button
-                id="copyInstall"
-                class="btn btn-outline-secondary btn-sm"
-                type="button">Copy</button
-              >
-            </div>
-            <pre
-              id="installCommand"
-              class="bg-light p-3 rounded small text-secondary mb-3">
-educates deploy-workshop -f {workshop.url}
-            </pre>
-            <!-- <div class="text-muted small">Replace <code>my-{workshop.slug}</code> with your desired release name.</div> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const installBtn = document.getElementById("installBtn");
-        const modalEl = document.getElementById("installModal");
-        // @ts-ignore
-        let modal;
-        // @ts-ignore
-        if (window.bootstrap) {
-          // @ts-ignore
-          modal = new window.bootstrap.Modal(modalEl);
-        }
-        installBtn?.addEventListener("click", () => {
-          // @ts-ignore
-          modal?.show();
-        });
-        // Copy to clipboard logic
-        const copyBtn = document.getElementById("copyInstall");
-        const installCmd = document.getElementById("installCommand");
-        copyBtn?.addEventListener("click", () => {
-          if (installCmd) {
-            const text = installCmd.innerText;
-            navigator.clipboard.writeText(text).then(() => {
-              copyBtn.innerText = "Copied!";
-              setTimeout(() => {
-                copyBtn.innerText = "Copy";
-              }, 1500);
-            });
-          }
-        });
-      });
-    </script>
-  </div>
+  {resource.type === 'Workshop' ? (
+    <WorkshopDetail client:load workshop={resource} />
+  ) : resource.type === 'ExtensionPackage' ? (
+    <ExtensionPackageDetail client:load extensionPackage={resource} />
+  ) : null}
 </MainLayout>

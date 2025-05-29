@@ -1,0 +1,9 @@
+type: KyvernoPolicy
+title: Educates Default Kyverno Policies
+description: Default Kyverno policies for Educates
+author: Educates
+image: educates
+labels:
+  - educates
+  - kyverno-policy
+repo_url: https://github.com/educates/educates-training-platform/blob/develop/carvel-packages/installer/bundle/config/ytt/_ytt_lib/packages/educates/_ytt_lib/kyverno-policies/require-ingress-session-name.yaml

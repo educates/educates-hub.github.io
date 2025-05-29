@@ -1,9 +1,12 @@
 ---
+type: Workshop
 title: Workshop Authoring
 slug: workshop-authoring
 description: Getting started with workshop authoring
 author: Educates Team
 image: educates
-url: https://github.com/educates/labs-authoring-guides/releases/download/main/workshops.yaml
+install_url: https://github.com/educates/labs-authoring-guides/releases/download/main/workshops.yaml
+repo_url: https://github.com/educates/labs-authoring-guides
+workshop_definition_url: https://github.com/educates/labs-authoring-guides/releases/download/main/workshops.yaml
 labels:
   - educates-showcase

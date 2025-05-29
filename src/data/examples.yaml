@@ -1,15 +1,5 @@
-title: GitOps with Argo CD
-description: Implement GitOps workflows using Argo CD in Kubernetes.
-image: argo
-author: Carlos Rivera
-date_created: 2024-06-12
-labels:
-  - gitops
-  - kubernetes
-url: https://github.com/educates/workshops/gitops-argo
-version: 1.0.2
-release_notes: Added new GitOps deployment strategies.
 ---
+type: Workshop
 title: Grafana Visualization
 description: Visualize metrics and logs with Grafana dashboards.
 image: grafana
@@ -17,10 +7,13 @@ author: Sofia Garcia
 date_created: 2024-06-22
 labels:
   - monitoring
-url: https://github.com/educates/workshops/grafana-visualization
+install_url: https://github.com/educates/workshops/grafana-visualization
+repo_url: https://github.com/educates/workshops/grafana-visualization
+workshop_definition_url: https://github.com/educates/workshops/grafana-visualization/releases/download/main/workshop.yaml
 version: 1.0.1
 release_notes: Added new dashboard templates.
 ---
+type: Workshop
 title: Helm Basics
 description: Introduction to Helm for Kubernetes package management.
 image: helm
@@ -29,10 +22,13 @@ date_created: 2024-06-15
 labels:
   - kubernetes
   - beginner
-url: https://github.com/educates/workshops/helm-basics
+install_url: https://github.com/educates/workshops/helm-basics
+repo_url: https://github.com/educates/workshops/helm-basics
+workshop_definition_url: https://github.com/educates/workshops/helm-basics/releases/download/main/workshop.yaml
 version: 1.0.0
 release_notes: First release.
 ---
+type: Workshop
 title: Istio Service Mesh
 description: Explore service mesh concepts and Istio features in Kubernetes.
 image: istio
@@ -41,10 +37,13 @@ date_created: 2024-06-18
 labels:
   - service-mesh
   - kubernetes
-url: https://github.com/educates/workshops/istio-service-mesh
+install_url: https://github.com/educates/workshops/istio-service-mesh
+repo_url: https://github.com/educates/workshops/istio-service-mesh
+workshop_definition_url: https://github.com/educates/workshops/istio-service-mesh/releases/download/main/workshop.yaml
 version: 1.2.0
 release_notes: Added traffic management labs.
 ---
+type: Workshop
 title: Kubernetes 101
 description: Introductory workshop for Kubernetes basics.
 image: kubernetes
@@ -53,10 +52,13 @@ date_created: 2024-06-01
 labels:
   - kubernetes
   - beginner
-url: https://github.com/educates/workshops/k8s101
+install_url: https://github.com/educates/workshops/k8s101
+repo_url: https://github.com/educates/workshops/k8s101
+workshop_definition_url: https://github.com/educates/workshops/k8s101/releases/download/main/workshop.yaml
 version: 1.0.0
 release_notes: Initial release.
 ---
+type: Workshop
 title: NGINX Ingress Controller
 description: Configure and use NGINX as an ingress controller in Kubernetes.
 image: nginx
@@ -65,10 +67,13 @@ date_created: 2024-06-28
 labels:
   - ingress
   - kubernetes
-url: https://github.com/educates/workshops/nginx-ingress
+install_url: https://github.com/educates/workshops/nginx-ingress
+repo_url: https://github.com/educates/workshops/nginx-ingress
+workshop_definition_url: https://github.com/educates/workshops/nginx-ingress/releases/download/main/workshop.yaml
 version: 1.0.0
 release_notes: Initial NGINX Ingress Controller workshop.
 ---
+type: Workshop
 title: PostgreSQL on Kubernetes
 description: Deploy and manage PostgreSQL databases in Kubernetes.
 image: postgresql
@@ -77,10 +82,13 @@ date_created: 2024-06-25
 labels:
   - database
   - kubernetes
-url: https://github.com/educates/workshops/postgresql-k8s
+install_url: https://github.com/educates/workshops/postgresql-k8s
+repo_url: https://github.com/educates/workshops/postgresql-k8s
+workshop_definition_url: https://github.com/educates/workshops/postgresql-k8s/releases/download/main/workshop.yaml
 version: 1.0.0
 release_notes: Initial PostgreSQL on Kubernetes workshop.
 ---
+type: Workshop
 title: Prometheus Monitoring
 description: Learn how to monitor Kubernetes clusters with Prometheus.
 image: prometheus
@@ -89,10 +97,13 @@ date_created: 2024-06-10
 labels:
   - monitoring
   - kubernetes
-url: https://github.com/educates/workshops/prometheus-monitoring
+install_url: https://github.com/educates/workshops/prometheus-monitoring
+repo_url: https://github.com/educates/workshops/prometheus-monitoring
+workshop_definition_url: https://github.com/educates/workshops/prometheus-monitoring/releases/download/main/workshop.yaml
 version: 1.1.0
 release_notes: Updated for Prometheus Operator.
 ---
+type: Workshop
 title: Tekton CI/CD
 description: Build CI/CD pipelines for Kubernetes using Tekton.
 image: tekton
@@ -101,6 +112,8 @@ date_created: 2024-06-20
 labels:
   - ci/cd
   - kubernetes
-url: https://github.com/educates/workshops/tekton-ci
+install_url: https://github.com/educates/workshops/tekton-ci
+repo_url: https://github.com/educates/workshops/tekton-ci
+workshop_definition_url: https://github.com/educates/workshops/tekton-ci/releases/download/main/workshop.yaml
 version: 1.0.0
 release_notes: Initial Tekton CI/CD workshop.

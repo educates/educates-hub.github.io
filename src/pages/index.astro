@@ -1,15 +1,14 @@
 ---
-import { loadWorkshops } from "../utils/loadWorkshops";
+import { loadWorkshops, loadExtensionPackages } from "../utils/loadWorkshops";
 import MainLayout from "../layouts/MainLayout.astro";
-import WorkshopGrid from "../components/WorkshopGrid.jsx";
-const workshops = await loadWorkshops();
+import EducatesResourceSelectorIsland from "../components/EducatesResourceSelectorIsland.jsx";
 ---
 
 <MainLayout
-  title="EducatesHub - Workshop Catalog"
-  description="Browse and discover Educates workshops."
+  title="EducatesHub - Educates Resources Catalog"
+  description="Browse and discover Educates workshops, extension packages, and more."
 >
   <div class="container-fluid py-4" style="max-width: 2000px;">
-    <WorkshopGrid client:load workshops={workshops} />
+    <EducatesResourceSelectorIsland client:load />
   </div>
 </MainLayout>
