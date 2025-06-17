@@ -1,0 +1,33 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-k8s-fundamentals
+spec:
+  description: An interactive workshop on Kubernetes fundamentals.
+  session:
+    applications:
+      console:
+        enabled: true
+      editor:
+        enabled: true
+      slides:
+        enabled: true
+        reveal.js:
+          version: 3.x
+      terminal:
+        enabled: true
+        layout: split
+    namespaces:
+      budget: medium
+      security:
+        policy: restricted
+  title: Kubernetes Fundamentals
+  version: "8.3"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/lab-k8s-fundamentals-files:8.3
+      includePaths:
+      - /workshop/**
+      - /templates/**
+      - /README.md

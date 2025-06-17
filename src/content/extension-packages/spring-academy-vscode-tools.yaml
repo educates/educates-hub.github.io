@@ -1,0 +1,8 @@
+title: Spring Academy VSCode Extension Package
+description: VSCode extension package for the Spring Academy to add support for Spring Boot and Spring Cloud.
+author: Spring Academy
+image: spring
+labels:
+  - spring-academy
+repo_url: https://github.com/spring-academy/spring-academy-tools
+version: v1.0.1

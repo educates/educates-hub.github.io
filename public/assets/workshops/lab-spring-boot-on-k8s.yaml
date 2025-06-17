@@ -1,0 +1,89 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-spring-boot-on-k8s
+spec:
+  description: Introduction to Spring Boot on Kubernetes
+  environment:
+    objects:
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        labels:
+          app: initializr
+        name: initializr
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: initializr
+        template:
+          metadata:
+            labels:
+              app: initializr
+          spec:
+            containers:
+            - image: ghcr.io/vmware-tanzu-labs/educates-spring-initializr:2.0
+              imagePullPolicy: Always
+              name: dashboard
+              ports:
+              - containerPort: 8080
+                name: 8080-tcp
+                protocol: TCP
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: initializr
+        name: initializr
+      spec:
+        ports:
+        - name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+        selector:
+          app: initializr
+        type: ClusterIP
+  session:
+    applications:
+      console:
+        enabled: true
+        vendor: octant
+      docker:
+        enabled: true
+      editor:
+        enabled: true
+      registry:
+        enabled: true
+      terminal:
+        enabled: true
+        layout: split
+    dashboards:
+    - name: Initializr
+      url: $(ingress_protocol)://initializr-$(session_namespace).$(ingress_domain)
+    ingresses:
+    - host: initializr.$(workshop_namespace).svc.cluster.local
+      name: initializr
+      port: 8080
+      protocol: http
+    namespaces:
+      budget: large
+      security:
+        policy: baseline
+    resources:
+      memory: 2Gi
+  title: Spring Boot on Kubernetes
+  version: "4.3"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/lab-spring-boot-on-k8s-files:4.3
+      includePaths:
+      - /workshop/**
+      - /exercises/**
+      - /README.md
+    - image:
+        url: ghcr.io/educates/lab-spring-boot-on-k8s-maven:latest
+      path: .m2
+    image: jdk17-environment:*

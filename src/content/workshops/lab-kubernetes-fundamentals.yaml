@@ -1,0 +1,18 @@
+slug: lab-kubernetes-fundamentals
+title: Kubernetes Fundamentals
+description: An interactive workshop on Kubernetes fundamentals
+image: kubernetes
+author: GrahamDumpleton
+#date_created: 2024-07-12
+labels: 
+  - kubernetes
+  - fundamentals
+release_notes: |-
+  - Convert it to Hugo
+  - Upgrade sample app to make it work on arm64
+repository:
+  org: educates
+  name: lab-k8s-fundamentals
+  ref: "8.3"
+  path: workshop.yaml
+install_url: https://github.com/educates/lab-k8s-fundamentals/releases/download/8.3/workshop.yaml

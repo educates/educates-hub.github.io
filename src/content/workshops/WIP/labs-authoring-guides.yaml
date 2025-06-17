@@ -1,0 +1,13 @@
+title: Workshop Authoring
+slug: workshop-authoring
+description: Getting started with workshop authoring
+author: Educates Team
+image: educates
+labels:
+  - educates-showcase
+repository:
+  org: educates
+  name: labs-authoring-guides
+  ref: "main"
+  path: workshops.yaml
+install_url: https://github.com/educates/labs-authoring-guides/releases/download/main/workshops.yaml

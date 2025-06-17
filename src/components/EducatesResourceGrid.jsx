@@ -1,8 +1,9 @@
 import { useState, useMemo } from "react";
+import EducatesResourceTile from './EducatesResourceTile.jsx';
 
 const PAGE_SIZE_OPTIONS = [12, 24, 48];
 
-export default function WorkshopGrid({ workshops }) {
+export default function EducatesResourceGrid({ resources = [] }) {
   const [search, setSearch] = useState("");
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [page, setPage] = useState(1);
@@ -10,13 +11,13 @@ export default function WorkshopGrid({ workshops }) {
 
   // Get all unique labels
   const allLabels = useMemo(
-    () => Array.from(new Set(workshops.flatMap((w) => w.labels || []))).sort(),
-    [workshops],
+    () => Array.from(new Set(resources.flatMap((w) => w.labels || []))).sort(),
+    [resources],
   );
 
   // Filtering logic
   const filtered = useMemo(() => {
-    return workshops.filter((w) => {
+    return resources.filter((w) => {
       const matchesSearch =
         w.title.toLowerCase().includes(search.toLowerCase()) ||
         w.description.toLowerCase().includes(search.toLowerCase());
@@ -25,7 +26,7 @@ export default function WorkshopGrid({ workshops }) {
         selectedLabels.every((l) => (w.labels || []).includes(l));
       return matchesSearch && matchesLabels;
     });
-  }, [workshops, search, selectedLabels]);
+  }, [resources, search, selectedLabels]);
 
   // Pagination logic
   const totalPages = Math.ceil(filtered.length / pageSize);
@@ -96,7 +97,7 @@ export default function WorkshopGrid({ workshops }) {
         <div className="d-flex justify-content-between align-items-center mb-3">
           <input
             type="text"
-            placeholder="Search workshops..."
+            placeholder="Search..."
             className="form-control form-control-lg w-75"
             value={search}
             onChange={handleSearch}
@@ -120,45 +121,9 @@ export default function WorkshopGrid({ workshops }) {
           </div>
         </div>
         <div className="row g-4">
-          {paginated.map((workshop) => (
-            <div className="col-12 col-md-4 d-flex" key={workshop.slug}>
-              <a
-                href={`/${workshop.slug}`}
-                className="text-decoration-none fade-in w-100"
-              >
-                <div
-                  className="card h-100 shadow-sm border-primary border-opacity-10 transition-transform"
-                  style={{ transition: "box-shadow 0.2s, transform 0.2s" }}
-                >
-                  <img
-                    src={workshop.image}
-                    alt={workshop.title}
-                    className="card-img-top bg-light p-3"
-                    style={{ height: 140, objectFit: "contain" }}
-                  />
-                  <div className="card-body d-flex flex-column">
-                    <h2 className="card-title h6 text-primary fw-bold mb-2">
-                      {workshop.title}
-                    </h2>
-                    <p className="card-text text-secondary small mb-2">
-                      {workshop.description}
-                    </p>
-                    <div className="mb-2">
-                      {(workshop.labels || []).map((label) => (
-                        <span
-                          className="badge bg-primary bg-opacity-10 text-primary fw-normal me-1 mb-1"
-                          key={label}
-                        >
-                          {label}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="text-muted small mt-auto">
-                      By {workshop.author}
-                    </div>
-                  </div>
-                </div>
-              </a>
+          {paginated.map((resource) => (
+            <div className="col-12 col-md-4 d-flex" key={resource.slug}>
+              <EducatesResourceTile educatesResource={resource} class="fade-in w-100" />
             </div>
           ))}
         </div>

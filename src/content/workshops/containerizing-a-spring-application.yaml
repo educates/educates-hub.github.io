@@ -1,0 +1,32 @@
+title: Containerizing a Spring Application
+slug: containerizing-a-spring-application
+description: How to containerize a Spring Boot application and run it in docker
+# prerequisites: |-
+#   In order to install this workshop, you need to have the following prerequisites:
+#   - Docker installed
+#   - Java installed
+#   - Spring Boot installed
+#   - Kubernetes installed
+#   - Kubernetes CLI installed
+#   - Kubernetes Dashboard installed
+#runs_on_docker: true
+author: Educates Team
+date_created: 2025-05-30
+version: "4.2"
+release_notes: |-
+  - Initial release
+  - Added prerequisites
+  - Added release notes
+  - Added source file
+image: spring
+repository:
+  org: educates
+  name: labs-spring-workshops
+  ref: "4.3"
+  path: workshops/lab-containerizing-spring/resources/workshop.yaml
+install_url: https://github.com/educates/labs-spring-workshops/releases/download/4.3/lab-containerizing-spring.yaml
+labels:
+  - educates-showcase
+  - spring
+  - java
+  - docker

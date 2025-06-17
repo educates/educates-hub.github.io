@@ -1,0 +1,16 @@
+title: SpringBoot on Kubernetes
+slug: lab-spring-boot-on-k8s
+description: Steps through creating a Spring Boot application, containerizing it, and deploying it to Kubernetes.
+author: Educates Team
+image: spring
+repository:
+  org: educates
+  name: labs-spring-workshops
+  ref: "4.3"
+  path: workshops/lab-spring-boot-on-k8s/resources/workshop.yaml
+install_url: https://github.com/educates/labs-spring-workshops/releases/download/4.3/lab-spring-boot-on-k8s.yaml
+labels:
+  - educates-showcase
+  - spring
+  - java
+  - kubernetes
