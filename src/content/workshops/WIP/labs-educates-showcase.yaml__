@@ -1,5 +1,4 @@
 ---
-type: Workshop
 title: Workshop Session
 slug: workshop-session
 description: Overview of the containerized workshop environment.
@@ -11,7 +10,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Session Namespace
 slug: session-namespace
 description: Overview of Kubernetes application deployment.
@@ -23,7 +21,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Virtual Cluster
 slug: virtual-cluster
 description: Overview of optional virtual Kubernetes cluster.
@@ -36,7 +33,6 @@ labels:
   - educates-showcase
   - vcluster
 ---
-type: Workshop
 title: Multiple Clusters
 slug: multiple-clusters
 description: Overview of working with multiple clusters.
@@ -48,7 +44,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Virtual Machines
 slug: virtual-machines
 description: Overview of provisioning virtual machines.
@@ -61,7 +56,6 @@ labels:
   - educates-showcase
   - virtual-machine
 ---
-type: Workshop
 title: Integrated Editor
 slug: integrated-editor
 description: Overview of integrated VS Code editor.
@@ -73,7 +67,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Slide Presentations
 slug: slide-presentations
 description: Overview of integrating slide presentations.
@@ -85,7 +78,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Docker Runtime
 slug: docker-runtime
 description: Overview of deploying applications using docker.
@@ -98,7 +90,6 @@ labels:
   - educates-showcase
   - docker
 ---
-type: Workshop
 title: Examiner Scripts
 slug: examiner-scripts
 description: Overview of using self check examinations.
@@ -107,7 +98,6 @@ image: educates
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Java Environment
 slug: java-environment
 description: Overview of working on Java applications.
@@ -117,7 +107,6 @@ labels:
   - educates-showcase
   - java
 ---
-type: Workshop
 title: Conda Environment
 slug: conda-environment
 description: Overview of working on Python applications.
@@ -127,7 +116,6 @@ labels:
   - educates-showcase
   - python
 ---
-type: Workshop
 title: Shared Resources
 slug: shared-resources
 description: Overview of pre-creating shared resources.
@@ -139,7 +127,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Session Resources
 slug: session-resources
 description: Overview of creating per session resources.
@@ -151,7 +138,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Extension Packages
 slug: extension-packages
 description: Overview of adding additional extension packages.
@@ -163,7 +149,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Managed Services
 slug: managed-services
 description: Overview of running additional managed processes.
@@ -175,7 +160,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Ingress Proxy
 slug: ingress-proxy
 description: Overview of adding ingresses for local processes.
@@ -187,7 +171,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Git Repositories
 slug: git-repositories
 description: Overview of using local hosted Git repositories.
@@ -196,7 +179,6 @@ image: educates
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Installing Educates
 slug: installing-educates
 description: Overview of installing Educates using the CLI.
@@ -208,7 +190,6 @@ workshop_definition_url: https://github.com/educates/labs-educates-showcase/rele
 labels:
   - educates-showcase
 ---
-type: Workshop
 title: Workshop Authoring
 slug: workshop-authoring
 description: Overview of authoring workshops for Educates.

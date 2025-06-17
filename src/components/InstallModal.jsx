@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 
-export default function InstallModal({ show, onClose, installUrl, workshopSlug, downloadUrl }) {
+export default function InstallModal({ show, onClose, downloadUrl }) {
   const [copyStatus, setCopyStatus] = useState('Copy');
   const installCmdRef = useRef(null);
   const modalRef = useRef(null);

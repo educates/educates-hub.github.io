@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { IoOpen, IoCopy, IoDownload } from "react-icons/io5";
-import { Octokit } from "octokit";
 
-export default function ViewSourceModal({ show, onClose, src, repo, assetId, downloadUrl }) {
+export default function ViewSourceModal({ show, onClose, downloadUrl, sourceContent }) {
   const modalRef = useRef(null);
   const [copyStatus, setCopyStatus] = useState("copy");
   const [fileContent, setFileContent] = useState("");
@@ -28,6 +27,9 @@ export default function ViewSourceModal({ show, onClose, src, repo, assetId, dow
     }
   }, [show]);
 
+  // If sourceContent is provided, use it as the file content
+  const displayContent = sourceContent !== undefined ? sourceContent : fileContent;
+
   const logError = (error) => {
     console.error(error);
     setError(error.message || error.toString());
@@ -37,76 +39,9 @@ export default function ViewSourceModal({ show, onClose, src, repo, assetId, dow
     setReleaseError(error.message || error.toString());
   };
 
-  // Fetch file content from GitHub using Octokit when modal is shown
-  useEffect(() => {
-    if (show && repo && repo.org && repo.name && repo.path) {
-      setLoading(true);
-      logError("");
-      setFileContent("");
-      const octokit = new Octokit();
-      octokit.rest.repos.getContent({
-        owner: repo.org,
-        repo: repo.name,
-        path: repo.path,
-        ref: repo.branch || 'main',
-      })
-        .then((res) => {
-          // If file, decode base64
-          if (res.data && res.data.type === 'file' && res.data.content) {
-            const decoded = atob(res.data.content.replace(/\n/g, ''));
-            setFileContent(decoded);
-          } else {
-            logError('File not found or not a regular file.');
-          }
-        })
-        .catch((e) => {
-          logError('Error loading file: ' + (e.message || e.toString()));
-        })
-        .finally(() => setLoading(false));
-    } else {
-      logError("No repo or path provided");
-    }
-  }, [show, repo]);
-
-  // Fetch release asset content if asset_id is provided
-  // TODO: We can not do this without a proxy because of CORS
-  // useEffect(() => {
-  //   if (show && repo && repo.org && repo.name && repo.asset_name) {
-  //     setReleaseLoading(true);
-  //     setReleaseError("");
-  //     setReleaseContent("");
-  //     const octokit = new Octokit();
-  //     octokit.rest.repos.getReleaseAsset({
-  //       owner: repo.org,
-  //       repo: repo.name,
-  //       asset_id: assetId,
-  //       // Accept header for raw content
-  //       headers: { Accept: 'application/octet-stream' },
-  //     })
-  //       .then((res) => {
-  //         // The content is in res.data (as a Blob or ArrayBuffer)
-  //         // Try to convert to string if possible
-  //         let content = res.data;
-  //         if (content instanceof ArrayBuffer) {
-  //           content = new TextDecoder().decode(content);
-  //         } else if (typeof content === 'object' && content instanceof Blob) {
-  //           content.text().then(setReleaseContent);
-  //           return;
-  //         }
-  //         setReleaseContent(content);
-  //       })
-  //       .catch((e) => {
-  //         logReleaseError('Error loading release asset: ' + (e.message || e.toString()));
-  //       })
-  //       .finally(() => setReleaseLoading(false));
-  //   } else {
-  //     setReleaseContent("");
-  //   }
-  // }, [show, repo]);
-
   const handleCopy = () => {
-    if (fileContent && navigator.clipboard) {
-      navigator.clipboard.writeText(fileContent);
+    if (displayContent && navigator.clipboard) {
+      navigator.clipboard.writeText(displayContent);
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(src);
     }
@@ -126,8 +61,8 @@ export default function ViewSourceModal({ show, onClose, src, repo, assetId, dow
   };
 
   const handleOpenInNewTab = () => {
-    if (fileContent) {
-      const blob = new Blob([fileContent], { type: 'text/plain' });
+    if (displayContent) {
+      const blob = new Blob([displayContent], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       window.open(url, '_blank');
     } else {
@@ -188,7 +123,10 @@ export default function ViewSourceModal({ show, onClose, src, repo, assetId, dow
             </div>
           </div>
           <div className="modal-body p-0" style={{ maxHeight: '70vh', overflow: 'auto' }}>
-            {loading ? (
+            {/* If sourceContent is provided, show it directly, else fallback to old logic */}
+            {sourceContent !== undefined ? (
+              <pre className="m-0 p-4 bg-light text-secondary" style={{ minHeight: '100%', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>{sourceContent}</pre>
+            ) : loading ? (
               <div className="w-100 h-100 d-flex align-items-center justify-content-center text-secondary">
                 Loading...
               </div>

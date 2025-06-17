@@ -1,0 +1,12 @@
+title: Educates CLI Extension Package
+description: Provides Educates CLI to any workshop
+image: educates
+author: Jorge Morales
+date_created: 2025-05-26
+labels:
+  - educates
+  - cli
+version: 3.3.2
+repo_url: https://github.com/educates/educates-extension-packages
+oci_image: ghcr.io/educates/educates-extension-packages/educates:v3.3.2
+release_notes: Initial release with latest versions of the Educates CLI.

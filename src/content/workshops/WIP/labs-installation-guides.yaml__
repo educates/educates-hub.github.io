@@ -1,5 +1,4 @@
 ---
-type: Workshop
 title: Installing Educates
 slug: installing-educates-cli
 description: Installing Educates using the CLI
@@ -12,7 +11,6 @@ labels:
   - educates-showcase
   - installation-guides
 ---
-type: Workshop
 title: Installing Educates
 slug: installing-educates-carvel
 description:  installing Educates using kapp-controller
@@ -25,7 +23,6 @@ labels:
   - educates-showcase
   - installation-guides
 ---
-type: Workshop
 title: Installing Educates Lookup Service
 slug: installing-educates-lookup-service
 description: Installing Educates Lookup Service
@@ -39,7 +36,6 @@ labels:
   - installation-guides
   - lookup-service
 ---
-type: Workshop
 title: Installing Educates standalone Lookup Service
 slug: installing-educates-standalone-lookup-service
 description: Installing Educates standalone Lookup Service
@@ -53,7 +49,6 @@ labels:
   - installation-guides
   - lookup-service
 ---
-type: Workshop
 title: Lookup Service Configuration
 slug: lookup-service-configuration
 description: Configuring the Educates lookup service
@@ -67,7 +62,6 @@ labels:
   - installation-guides
   - lookup-service
 ---
-type: Workshop
 title: Lookup Service Usage
 slug: lookup-service-usage
 description: Using the Educates lookup service

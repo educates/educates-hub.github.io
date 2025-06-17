@@ -63,10 +63,17 @@ EducatesHub is a static site built with [Astro](https://astro.build/) and TypeSc
 3. **Open your browser:**
    Visit [http://localhost:4321](http://localhost:4321)
 
-## Customizing Workshops
+## Adding Educates Resources
 
-- Add or edit YAML files in `src/data/` to update the workshop catalog.
+- Add or edit YAML files in `src/content/` to update the workshop, extensions, kyverno policies or themes catalog.
 - Images referenced in YAML should be placed in `public/images/` or mapped in the loader utility.
+- Fetch referenced assets, run `./fetch_assets.sh` to fetch referenced workshops, kyverno policies, themes and extensions.
+
+## Release a new version of the site
+
+- Always work in develop branch
+- When things are ready to be released, merge code into main via PR (this will publish the site)
+- Rebase develop on main
 
 ## Contributing
 

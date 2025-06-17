@@ -1,98 +1,62 @@
 import React, { useState, useEffect } from "react";
 import EducatesResourceGrid from "./EducatesResourceGrid.jsx";
-import { loadWorkshops, loadExtensionPackages, loadEditorExtensions, loadKyvernoPolicies } from "../utils/loadWorkshops.js";
 
-export default function EducatesResourceSelectorIsland() {
-  const [type, setType] = useState("Workshop");
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+function getTypeFromUrl(defaultType, allResources) {
+  if (typeof window === 'undefined') return defaultType;
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type');
+  if (type && Object.keys(allResources).includes(type)) {
+    return type;
+  }
+  return defaultType;
+}
+
+export default function EducatesResourceSelectorIsland({ allResources }) {
+  const defaultType = "Workshop";
+  const [type, setType] = useState(() => getTypeFromUrl(defaultType, allResources));
+  const [items, setItems] = useState(allResources[type] || []);
 
   useEffect(() => {
-    setLoading(true);
-    const load = async () => {
-      if (type === "Workshop") {
-        setItems(await loadWorkshops());
-      } else if (type === "ExtensionPackage") {
-        setItems(await loadExtensionPackages());
-      } else if (type === "EditorExtension") {
-        setItems(await loadEditorExtensions());
-      } else if (type === "KyvernoPolicy") {
-        setItems(await loadKyvernoPolicies());
-      }
-      else {
-        setItems([]);
-      }
-      setLoading(false);
+    setItems(allResources[type] || []);
+    // Update the URL query parameter when type changes
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.set('type', type);
+      window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+  }, [type, allResources]);
+
+  useEffect(() => {
+    // Listen for popstate (back/forward navigation)
+    const onPopState = () => {
+      setType(getTypeFromUrl(defaultType, allResources));
     };
-    load();
-  }, [type]);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [allResources]);
 
   return (
     <>
       <div className="mb-4 d-flex gap-4 align-items-center">
         <span className="fw-bold">Educates Resource Type:</span>
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="typeRadio"
-            id="radio-workshops"
-            value="Workshop"
-            checked={type === "Workshop"}
-            onChange={() => setType("Workshop")}
-          />
-          <label className="form-check-label" htmlFor="radio-workshops">
-            Workshops
-          </label>
-        </div>
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="typeRadio"
-            id="radio-extension-packages"
-            value="ExtensionPackage"
-            checked={type === "ExtensionPackage"}
-            onChange={() => setType("ExtensionPackage")}
-          />
-          <label className="form-check-label" htmlFor="radio-extension-packages">
-            Extension Packages
-          </label>
-        </div>
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="typeRadio"
-            id="radio-editor-extensions"
-            value="EditorExtension"
-            checked={type === "EditorExtension"}
-            onChange={() => setType("EditorExtension")}
-          />
-          <label className="form-check-label" htmlFor="radio-editor-extensions">
-            Editor Extensions
-          </label>
-        </div>
-          <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="typeRadio"
-            id="radio-kyverno-policies"
-            value="KyvernoPolicy"
-            checked={type === "KyvernoPolicy"}
-            onChange={() => setType("KyvernoPolicy")}
-          />
-          <label className="form-check-label" htmlFor="radio-kyverno-policies">
-            Kyverno Policies
-          </label>
-        </div>
+        {Object.keys(allResources).map((key) => (
+          <div className="form-check form-check-inline" key={key}>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="typeRadio"
+              id={`radio-${key}`}
+              value={key}
+              checked={type === key}
+              onChange={() => setType(key)}
+            />
+            <label className="form-check-label" htmlFor={`radio-${key}`}>
+              {key.replace(/([A-Z])/g, " $1").trim()}
+            </label>
+          </div>
+        ))}
       </div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <EducatesResourceGrid resources={items} />
-      )}
+      <EducatesResourceGrid resources={items} />
     </>
   );
 } 

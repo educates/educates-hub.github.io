@@ -1,7 +1,32 @@
 ---
-import { loadWorkshops, loadExtensionPackages } from "../utils/loadWorkshops";
+import { getCollection } from "astro:content";
+import { imageMap, educatesDefaultImage } from "../utils/imageMap";
 import MainLayout from "../layouts/MainLayout.astro";
 import EducatesResourceSelectorIsland from "../components/EducatesResourceSelectorIsland.jsx";
+
+function mapImage(resource: any) {
+  let image = resource.image;
+  if (typeof image === "string" && imageMap[image]) {
+    image = imageMap[image];
+  }
+  if (typeof image === "string" && !Object.values(imageMap).includes(image)) {
+    image = educatesDefaultImage;
+  }
+  return { ...resource, image };
+}
+
+const workshops = (await getCollection('workshops')).map(w => mapImage({ ...w.data, slug: w.id, type: "workshop" }));
+const extensionPackages = (await getCollection('extension-packages')).map(e => mapImage({ ...e.data, slug: e.id, type: "extension-package" }));
+const kyvernoPolicies = (await getCollection('kyverno-policies')).map(e => mapImage({ ...e.data, slug: e.id, type: "kyverno-policy" }));
+// @ts-expect-error: 'themes' is a valid collection defined in config.ts
+const themes = (await getCollection('themes')).map(t => mapImage({ ...t.data, slug: t.id, type: "theme" }));
+
+const allResources = {
+  Workshop: workshops,
+  ExtensionPackage: extensionPackages,
+  // KyvernoPolicy: kyvernoPolicies,
+  // Theme: themes,
+};
 ---
 
 <MainLayout
@@ -9,6 +34,6 @@ import EducatesResourceSelectorIsland from "../components/EducatesResourceSelect
   description="Browse and discover Educates workshops, extension packages, and more."
 >
   <div class="container-fluid py-4" style="max-width: 2000px;">
-    <EducatesResourceSelectorIsland client:load />
+    <EducatesResourceSelectorIsland client:load allResources={allResources} />
   </div>
 </MainLayout>

@@ -1,0 +1,16 @@
+title: Creating a Spring Application
+slug: creating-a-spring-application
+description: Introduces how to use the start.spring.io web site to create a Spring Boot application
+author: Educates Team
+image: spring
+# runs_on_docker: true
+repository:
+  org: educates
+  name: labs-spring-workshops
+  ref: "4.3"
+  path: workshops/lab-creating-a-spring-app/resources/workshop.yaml
+install_url: https://github.com/educates/labs-spring-workshops/releases/download/4.3/lab-creating-a-spring-app.yaml
+labels:
+  - educates-showcase
+  - spring
+  - java

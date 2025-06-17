@@ -1,18 +1,16 @@
 import { useState } from 'react';
 import InstallModal from './InstallModal.jsx';
 
-export default function InstallIsland({ installUrl, workshopSlug, downloadUrl }) {
+export default function InstallIsland({ downloadUrl }) {
   const [show, setShow] = useState(false);
   return (
     <>
-      <button className="btn btn-success" type="button" onClick={() => setShow(true)}>
+      <button className="btn btn-outline-primary btn-sm" type="button" onClick={() => setShow(true)}>
         Install
       </button>
       <InstallModal
         show={show}
         onClose={() => setShow(false)}
-        installUrl={installUrl}
-        workshopSlug={workshopSlug}
         downloadUrl={downloadUrl}
       />
       {show && (

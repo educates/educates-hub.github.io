@@ -1,20 +1,55 @@
 ---
-import { loadEducatesResources } from "../utils/loadWorkshops";
-import type { EducatesResourceBase } from "../utils/loadWorkshops";
+import { getCollection } from "astro:content";
+import { imageMap, educatesDefaultImage } from "../utils/imageMap";
 import MainLayout from "../layouts/MainLayout.astro";
 import WorkshopDetail from '../components/WorkshopDetail.jsx';
 import ExtensionPackageDetail from '../components/ExtensionPackageDetail.jsx';
+import KyvernoPolicyDetail from '../components/KyvernoPolicyDetail.jsx';
+import ThemeDetail from '../components/ThemeDetail.jsx';
 
 export async function getStaticPaths() {
-  const resources = await loadEducatesResources();
-  return resources.map((r) => ({
-    params: { slug: r.slug },
-  }));
+  const workshops = await getCollection('workshops');
+  const extensionPackages = await getCollection('extension-packages');
+  const kyvernoPolicies = await getCollection('kyverno-policies');
+  const themes = await getCollection('themes');
+  return [
+    ...workshops.map(w => ({ params: { slug: w.id } })),
+    ...extensionPackages.map(e => ({ params: { slug: e.id } })),
+    ...kyvernoPolicies.map(e => ({ params: { slug: e.id } })),
+    ...themes.map(t => ({ params: { slug: t.id } })),
+  ];
 }
 
 const { slug } = Astro.params;
-const resources = await loadEducatesResources();
-const resource: EducatesResourceBase | undefined = resources.find((r) => r.slug === slug);
+
+function mapImage(resource: any) {
+  let image = resource.image;
+  if (typeof image === "string" && imageMap[image]) {
+    image = imageMap[image];
+  }
+  if (typeof image === "string" && !Object.values(imageMap).includes(image)) {
+    image = educatesDefaultImage;
+  }
+  return { ...resource, image };
+}
+
+const collections: { name: any, type: string }[] = [
+  { name: "workshops", type: "workshop" },
+  { name: "extension-packages", type: "extension-package" },
+  { name: "kyverno-policies", type: "kyverno-policy" },
+  { name: "themes", type: "theme" },
+];
+
+let resource = null;
+for (const { name, type } of collections) {
+  const entries = (await getCollection(name)) as any[];
+  const found = entries.find((e: any) => e.id === slug);
+  if (found) {
+    resource = mapImage({ ...found.data, type, slug: found.id });
+    break;
+  }
+}
+
 if (!resource) {
   throw new Error("Resource not found");
 }
@@ -24,9 +59,13 @@ if (!resource) {
   title={`${resource.title} - EducatesHub - ${resource.type}`}
   description={resource.description}
 >
-  {resource.type === 'Workshop' ? (
+  {resource.type === 'workshop' ? (
     <WorkshopDetail client:load workshop={resource} />
-  ) : resource.type === 'ExtensionPackage' ? (
+  ) : resource.type === 'extension-package' ? (
     <ExtensionPackageDetail client:load extensionPackage={resource} />
+  ) : resource.type === 'kyverno-policy' ? (
+    <KyvernoPolicyDetail client:load kyvernoPolicy={resource} />
+  ) : resource.type === 'theme' ? (
+    <ThemeDetail client:load theme={resource} />
   ) : null}
 </MainLayout>

@@ -1,5 +1,4 @@
 ---
-type: Workshop
 title: Grafana Visualization
 description: Visualize metrics and logs with Grafana dashboards.
 image: grafana
@@ -13,7 +12,6 @@ workshop_definition_url: https://github.com/educates/workshops/grafana-visualiza
 version: 1.0.1
 release_notes: Added new dashboard templates.
 ---
-type: Workshop
 title: Helm Basics
 description: Introduction to Helm for Kubernetes package management.
 image: helm
@@ -28,7 +26,6 @@ workshop_definition_url: https://github.com/educates/workshops/helm-basics/relea
 version: 1.0.0
 release_notes: First release.
 ---
-type: Workshop
 title: Istio Service Mesh
 description: Explore service mesh concepts and Istio features in Kubernetes.
 image: istio
@@ -43,7 +40,6 @@ workshop_definition_url: https://github.com/educates/workshops/istio-service-mes
 version: 1.2.0
 release_notes: Added traffic management labs.
 ---
-type: Workshop
 title: Kubernetes 101
 description: Introductory workshop for Kubernetes basics.
 image: kubernetes
@@ -58,7 +54,6 @@ workshop_definition_url: https://github.com/educates/workshops/k8s101/releases/d
 version: 1.0.0
 release_notes: Initial release.
 ---
-type: Workshop
 title: NGINX Ingress Controller
 description: Configure and use NGINX as an ingress controller in Kubernetes.
 image: nginx
@@ -73,7 +68,6 @@ workshop_definition_url: https://github.com/educates/workshops/nginx-ingress/rel
 version: 1.0.0
 release_notes: Initial NGINX Ingress Controller workshop.
 ---
-type: Workshop
 title: PostgreSQL on Kubernetes
 description: Deploy and manage PostgreSQL databases in Kubernetes.
 image: postgresql
@@ -88,7 +82,6 @@ workshop_definition_url: https://github.com/educates/workshops/postgresql-k8s/re
 version: 1.0.0
 release_notes: Initial PostgreSQL on Kubernetes workshop.
 ---
-type: Workshop
 title: Prometheus Monitoring
 description: Learn how to monitor Kubernetes clusters with Prometheus.
 image: prometheus
@@ -103,7 +96,6 @@ workshop_definition_url: https://github.com/educates/workshops/prometheus-monito
 version: 1.1.0
 release_notes: Updated for Prometheus Operator.
 ---
-type: Workshop
 title: Tekton CI/CD
 description: Build CI/CD pipelines for Kubernetes using Tekton.
 image: tekton

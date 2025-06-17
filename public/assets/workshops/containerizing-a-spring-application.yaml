@@ -1,0 +1,36 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-containerizing-spring
+spec:
+  description: A workshop describing how to run a Spring Boot application in docker.
+  session:
+    applications:
+      docker:
+        enabled: true
+      editor:
+        enabled: true
+      terminal:
+        enabled: true
+        layout: split
+    ingresses:
+    - name: demo
+      port: 8080
+    namespaces:
+      security:
+        token:
+          enabled: false
+    resources:
+      memory: 1Gi
+  title: Containerizing a Spring Boot application
+  version: "4.3"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/lab-containerizing-spring-files:4.3
+      includePaths:
+      - /workshop/**
+      - /exercises/**
+      - /README.md
+      newRootPath: workshops/lab-containerizing-spring
+    image: jdk17-environment:*
