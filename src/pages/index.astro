@@ -18,7 +18,6 @@ function mapImage(resource: any) {
 const workshops = (await getCollection('workshops')).map(w => mapImage({ ...w.data, slug: w.id, type: "workshop" }));
 const extensionPackages = (await getCollection('extension-packages')).map(e => mapImage({ ...e.data, slug: e.id, type: "extension-package" }));
 const kyvernoPolicies = (await getCollection('kyverno-policies')).map(e => mapImage({ ...e.data, slug: e.id, type: "kyverno-policy" }));
-// @ts-expect-error: 'themes' is a valid collection defined in config.ts
 const themes = (await getCollection('themes')).map(t => mapImage({ ...t.data, slug: t.id, type: "theme" }));
 
 const allResources = {

@@ -72,6 +72,10 @@ EducatesHub is a static site built with [Astro](https://astro.build/) and TypeSc
 ## Release a new version of the site
 
 - Always work in develop branch
+- Make sure that everything works locally and make astro check:
+  ```
+  npm run astro check
+  ```
 - When things are ready to be released, merge code into main via PR (this will publish the site)
 - Rebase develop on main
 
