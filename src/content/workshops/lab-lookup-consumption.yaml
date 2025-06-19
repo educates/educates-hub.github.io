@@ -1,0 +1,15 @@
+title: Using the Educates Lookup Service
+slug: lab-lookup-consumption
+description: How to use the Educates Lookup Service to front-end multiple Educates Clusters and embedding Educates workshops within your own site.
+author: Educates Team
+image: educates
+repository:
+  org: educates
+  name: labs-installation-guides
+  ref: "1.0.0"
+  path: workshops/lab-lookup-configuration/resources/workshop.yaml
+install_url: https://github.com/educates/labs-installation-guides/releases/download/1.0.0/lab-lookup-consumption.yaml 
+labels:
+  - educates-showcase
+  - usage
+  - educates-lookup-service
