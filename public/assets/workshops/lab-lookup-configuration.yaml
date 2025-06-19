@@ -1,0 +1,548 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-lookup-configuration
+spec:
+  description: A workshop on configuring the lookup service.
+  environment:
+    images:
+      registries:
+      - content:
+        - destination: educates
+          prefix: /educates/educates-extension-packages/educates
+          stripPrefix: true
+        onDemand: true
+        urls:
+        - https://ghcr.io
+    objects:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: kapp-installer
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: kapp-installer-$(workshop_namespace)
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-admin
+      subjects:
+      - kind: ServiceAccount
+        name: kapp-installer
+        namespace: $(workshop_namespace)
+  session:
+    applications:
+      console:
+        enabled: false
+      docker:
+        compose:
+          services:
+            registry:
+              image: registry:2.8.3
+              ports:
+              - 0.0.0.0:5001:5000
+        enabled: true
+        socket:
+          enabled: true
+      editor:
+        enabled: true
+      files:
+        directory: exercises
+        enabled: true
+      git:
+        enabled: false
+      registry:
+        enabled: false
+      terminal:
+        enabled: true
+        layout: split
+      vcluster:
+        enabled: false
+    namespaces:
+      budget: x-large
+      secondary:
+      - name: $(session_namespace)-hub
+      - name: $(session_namespace)-cluster-1
+      - name: $(session_namespace)-cluster-2
+      security:
+        policy: baseline
+        token:
+          enabled: false
+    objects:
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        name: registry-$(session_name)
+        namespace: $(workshop_namespace)
+      spec:
+        ports:
+        - name: registry
+          port: 80
+          protocol: TCP
+          targetPort: 5001
+        selector:
+          deployment: $(session_name)
+        type: ClusterIP
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        name: localhost-$(session_name)
+        namespace: $(workshop_namespace)
+      spec:
+        ports:
+        - name: renderer
+          port: 10081
+          protocol: TCP
+          targetPort: 10081
+        selector:
+          deployment: $(session_name)
+        type: ClusterIP
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: $(session_name)-hub-vcluster-values
+        namespace: $(workshop_namespace)
+      stringData:
+        values.yaml: |
+          vcluster:
+            image: rancher/k3s:v1.29.0-k3s1
+          syncer:
+            extraArgs:
+            - --tls-san=hub-vcluster.$(session_namespace)-hub.svc.$(cluster_domain)
+            - --out-kube-config-server=https://hub-vcluster.$(session_namespace)-hub.svc.$(cluster_domain)
+            - --kube-config-context-name=hub
+          mapServices:
+            fromHost:
+            - from: $(workshop_namespace)/registry-$(session_name)
+              to: default/registry
+            - from: $(workshop_namespace)/localhost-$(session_name)
+              to: default/loopback
+            - from: $(session_namespace)-cluster-1/cluster-1-vcluster
+              to: default/cluster-1-vcluster
+            - from: $(session_namespace)-cluster-2/cluster-2-vcluster
+              to: default/cluster-2-vcluster
+            - from: $(session_namespace)-cluster-1/cluster-1-vcluster
+              to: $(session_namespace)-cluster-1/cluster-1-vcluster
+            - from: $(session_namespace)-cluster-2/cluster-2-vcluster
+              to: $(session_namespace)-cluster-2/cluster-2-vcluster
+          sync:
+            ingresses:
+              enabled: true
+          exportKubeConfig:
+            context: "hub"
+          init:
+            manifests: |-
+              apiVersion: v1
+              kind: Namespace
+              metadata:
+                name: $(session_namespace)-cluster-1
+              ---
+              apiVersion: v1
+              kind: Namespace
+              metadata:
+                name: $(session_namespace)-cluster-2
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: $(session_name)-hub-vcluster-package
+        namespace: $(workshop_namespace)
+      spec:
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+        fetch:
+        - helmChart:
+            name: vcluster
+            repository:
+              url: https://charts.loft.sh
+            version: 0.19.9
+        noopDelete: true
+        serviceAccountName: kapp-installer
+        syncPeriod: 720h
+        template:
+        - helmTemplate:
+            name: hub-vcluster
+            namespace: $(session_namespace)-hub
+            valuesFrom:
+            - secretRef:
+                name: $(session_name)-hub-vcluster-values
+        - ytt:
+            inline:
+              paths:
+                overlays.yaml: |
+                  #@ load("@ytt:data", "data")
+                  #@ load("@ytt:overlay", "overlay")
+                  #@overlay/match by=overlay.all, expects="1+"
+                  ---
+                  metadata:
+                    #@overlay/match missing_ok=True
+                    ownerReferences:
+                      - apiVersion: training.educates.dev/v1beta1
+                        kind: WorkshopSession
+                        blockOwnerDeletion: true
+                        controller: true
+                        name: $(session_name)
+                        uid: $(workshop_session_uid)
+    - apiVersion: secrets.educates.dev/v1beta1
+      kind: SecretCopier
+      metadata:
+        name: $(session_name)-hub-kubeconfig
+      spec:
+        rules:
+        - sourceSecret:
+            name: vc-hub-vcluster
+            namespace: $(session_namespace)-hub
+          targetNamespaces:
+            nameSelector:
+              matchNames:
+              - $(workshop_namespace)
+          targetSecret:
+            name: $(session_name)-hub-kubeconfig
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: $(session_name)-cluster-1-vcluster-values
+        namespace: $(workshop_namespace)
+      stringData:
+        values.yaml: "vcluster:\n  image: rancher/k3s:v1.29.0-k3s1\nsyncer:\n  extraArgs:\n
+          \ - --tls-san=cluster-1-vcluster.$(session_namespace)-cluster-1.svc.$(cluster_domain),cluster-1-vcluster.default.svc.$(cluster_domain)\n
+          \ - --out-kube-config-server=https://cluster-1-vcluster.$(session_namespace)-cluster-1.svc.$(cluster_domain)\n
+          \ - --kube-config-context-name=cluster-1\nmapServices:\n  fromHost:\n  -
+          from: $(workshop_namespace)/registry-$(session_name)\n    to: default/registry\n
+          \ - from: $(workshop_namespace)/localhost-$(session_name)\n    to: default/loopback\nsync:\n
+          \ ingresses:\n    enabled: true\nexportKubeConfig:\n  context: \"cluster-1\"
+          \             \n"
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: $(session_name)-cluster-1-vcluster-package
+        namespace: $(workshop_namespace)
+      spec:
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+        fetch:
+        - helmChart:
+            name: vcluster
+            repository:
+              url: https://charts.loft.sh
+            version: 0.19.9
+        noopDelete: true
+        serviceAccountName: kapp-installer
+        syncPeriod: 720h
+        template:
+        - helmTemplate:
+            name: cluster-1-vcluster
+            namespace: $(session_namespace)-cluster-1
+            valuesFrom:
+            - secretRef:
+                name: $(session_name)-cluster-1-vcluster-values
+        - ytt:
+            inline:
+              paths:
+                overlays.yaml: |
+                  #@ load("@ytt:data", "data")
+                  #@ load("@ytt:overlay", "overlay")
+                  #@overlay/match by=overlay.all, expects="1+"
+                  ---
+                  metadata:
+                    #@overlay/match missing_ok=True
+                    ownerReferences:
+                      - apiVersion: training.educates.dev/v1beta1
+                        kind: WorkshopSession
+                        blockOwnerDeletion: true
+                        controller: true
+                        name: $(session_name)
+                        uid: $(workshop_session_uid)
+    - apiVersion: secrets.educates.dev/v1beta1
+      kind: SecretCopier
+      metadata:
+        name: $(session_name)-cluster-1-kubeconfig
+      spec:
+        rules:
+        - sourceSecret:
+            name: vc-cluster-1-vcluster
+            namespace: $(session_namespace)-cluster-1
+          targetNamespaces:
+            nameSelector:
+              matchNames:
+              - $(workshop_namespace)
+          targetSecret:
+            name: $(session_name)-cluster-1-kubeconfig
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: $(session_name)-cluster-2-vcluster-values
+        namespace: $(workshop_namespace)
+      stringData:
+        values.yaml: |
+          vcluster:
+            image: rancher/k3s:v1.29.0-k3s1
+          syncer:
+            extraArgs:
+            - --tls-san=cluster-2-vcluster.$(session_namespace)-cluster-2.svc.$(cluster_domain),cluster-2-vcluster.default.svc.$(cluster_domain)
+            - --out-kube-config-server=https://cluster-2-vcluster.$(session_namespace)-cluster-2.svc.$(cluster_domain)
+            - --kube-config-context-name=cluster-2
+          mapServices:
+            fromHost:
+            - from: $(workshop_namespace)/registry-$(session_name)
+              to: default/registry
+            - from: $(workshop_namespace)/localhost-$(session_name)
+              to: default/loopback
+          sync:
+            ingresses:
+              enabled: true
+          exportKubeConfig:
+            context: "cluster-2"
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: $(session_name)-cluster-2-vcluster-package
+        namespace: $(workshop_namespace)
+      spec:
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+        fetch:
+        - helmChart:
+            name: vcluster
+            repository:
+              url: https://charts.loft.sh
+            version: 0.19.9
+        noopDelete: true
+        serviceAccountName: kapp-installer
+        syncPeriod: 720h
+        template:
+        - helmTemplate:
+            name: cluster-2-vcluster
+            namespace: $(session_namespace)-cluster-2
+            valuesFrom:
+            - secretRef:
+                name: $(session_name)-cluster-2-vcluster-values
+        - ytt:
+            inline:
+              paths:
+                overlays.yaml: |
+                  #@ load("@ytt:data", "data")
+                  #@ load("@ytt:overlay", "overlay")
+                  #@overlay/match by=overlay.all, expects="1+"
+                  ---
+                  metadata:
+                    #@overlay/match missing_ok=True
+                    ownerReferences:
+                      - apiVersion: training.educates.dev/v1beta1
+                        kind: WorkshopSession
+                        blockOwnerDeletion: true
+                        controller: true
+                        name: $(session_name)
+                        uid: $(workshop_session_uid)
+    - apiVersion: secrets.educates.dev/v1beta1
+      kind: SecretCopier
+      metadata:
+        name: $(session_name)-cluster-2-kubeconfig
+      spec:
+        rules:
+        - sourceSecret:
+            name: vc-cluster-2-vcluster
+            namespace: $(session_namespace)-cluster-2
+          targetNamespaces:
+            nameSelector:
+              matchNames:
+              - $(workshop_namespace)
+          targetSecret:
+            name: $(session_name)-cluster-2-kubeconfig
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: educates-lookup-service-values
+        namespace: $(session_namespace)-hub
+      stringData:
+        values.yaml: |
+          clusterInfrastructure:
+            provider: vcluster
+          clusterPackages:
+            kyverno:
+              enabled: false
+          clusterIngress:
+            domain: "hub.$(session_name).$(ingress_domain)"
+          clusterSecurity:
+            policyEngine: none
+          workshopSecurity:
+            rulesEngine: none
+          lookupService:
+            enabled: true
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: educates-lookup-service
+        namespace: $(session_namespace)-hub
+      spec:
+        cluster:
+          kubeconfigSecretRef:
+            key: config
+            name: vc-hub-vcluster
+          namespace: default
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+        fetch:
+        - imgpkgBundle:
+            image: ghcr.io/educates/educates-installer:3.3.2
+        noopDelete: true
+        syncPeriod: 24h
+        template:
+        - ytt:
+            paths:
+            - config
+            - kbld/kbld-bundle.yaml
+            valuesFrom:
+            - path: kbld/kbld-images.yaml
+            - secretRef:
+                name: educates-lookup-service-values
+        - kbld:
+            paths:
+            - .imgpkg/images.yml
+            - '-'
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: educates-training-platform-values
+        namespace: $(session_namespace)-cluster-1
+      stringData:
+        values.yaml: |
+          clusterInfrastructure:
+            provider: vcluster
+          clusterPackages:
+            kyverno:
+              enabled: false
+          clusterIngress:
+            domain: "cluster-1.$(session_name).$(ingress_domain)"
+          clusterSecurity:
+            policyEngine: none
+          workshopSecurity:
+            rulesEngine: none
+          # lookupService:
+          #   enabled: true
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: educates-training-platform
+        namespace: $(session_namespace)-cluster-1
+      spec:
+        cluster:
+          kubeconfigSecretRef:
+            key: config
+            name: vc-cluster-1-vcluster
+          namespace: default
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+        fetch:
+        - imgpkgBundle:
+            image: ghcr.io/educates/educates-installer:3.3.2
+        noopDelete: true
+        syncPeriod: 24h
+        template:
+        - ytt:
+            paths:
+            - config
+            - kbld/kbld-bundle.yaml
+            valuesFrom:
+            - path: kbld/kbld-images.yaml
+            - secretRef:
+                name: educates-training-platform-values
+        - kbld:
+            paths:
+            - .imgpkg/images.yml
+            - '-'
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: educates-training-platform-values
+        namespace: $(session_namespace)-cluster-2
+      stringData:
+        values.yaml: |
+          clusterInfrastructure:
+            provider: vcluster
+          clusterPackages:
+            kyverno:
+              enabled: false
+          clusterIngress:
+            domain: "cluster-2.$(session_name).$(ingress_domain)"
+          clusterSecurity:
+            policyEngine: none
+          workshopSecurity:
+            rulesEngine: none
+          # lookupService:
+          #   enabled: true
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: educates-training-platform
+        namespace: $(session_namespace)-cluster-2
+      spec:
+        cluster:
+          kubeconfigSecretRef:
+            key: config
+            name: vc-cluster-2-vcluster
+          namespace: default
+        deploy:
+        - kapp:
+            rawOptions:
+            - --app-changes-max-to-keep=5
+        fetch:
+        - imgpkgBundle:
+            image: ghcr.io/educates/educates-installer:3.3.2
+        noopDelete: true
+        syncPeriod: 24h
+        template:
+        - ytt:
+            paths:
+            - config
+            - kbld/kbld-bundle.yaml
+            valuesFrom:
+            - path: kbld/kbld-images.yaml
+            - secretRef:
+                name: educates-training-platform-values
+        - kbld:
+            paths:
+            - .imgpkg/images.yml
+            - '-'
+    volumeMounts:
+    - mountPath: /opt/clusters/hub
+      name: hub-credentials-config
+    - mountPath: /opt/clusters/cluster-1
+      name: cluster-1-credentials-config
+    - mountPath: /opt/clusters/cluster-2
+      name: cluster-2-credentials-config
+    volumes:
+    - name: hub-credentials-config
+      secret:
+        secretName: $(session_name)-hub-kubeconfig
+    - name: cluster-1-credentials-config
+      secret:
+        secretName: $(session_name)-cluster-1-kubeconfig
+    - name: cluster-2-credentials-config
+      secret:
+        secretName: $(session_name)-cluster-2-kubeconfig
+  title: Lookup Service Configuration
+  version: 1.0.0
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/labs-installation-guides/lab-lookup-configuration-files:1.0.0
+      includePaths:
+      - /workshop/**
+      - /exercises/**
+      - /README.md
+    packages:
+    - files:
+      - image:
+          url: $(oci_image_cache)/educates:v3.3.2
+      name: educates
