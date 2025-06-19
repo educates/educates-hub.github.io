@@ -5,7 +5,7 @@ description: |-
   - Ability to run, debug and test Java apps from the code editor
   - Ability to build, test Java apps using Maven or Gradle build tools.
 
-  This extension does installation at startup, so that startup time is longer, but every feature is available immediately.
+  This extension uses files overlays so that startup time is faster.
 image: vscode
 author: Spring Academy Team
 date_created: 2025-06-19
@@ -14,5 +14,5 @@ labels:
   - java
 version: 0.29.2
 repo_url: https://github.com/educates/educates-extension-packages
-oci_image: ghcr.io/educates/educates-extension-packages/vscode-java-tools:v0.29.2
+oci_image: ghcr.io/educates/educates-extension-packages/vscode-java-tools-oci-overlay:v0.29.2
 release_notes: Initial release with latest versions of Microsoft's VSCode extension for Java development.

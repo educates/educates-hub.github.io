@@ -12,6 +12,7 @@ export const imageMap: Record<string, string> = {
   spring: "/images/spring.png",
   java: "/images/java.png",
   docker: "/images/docker.png",
+  vscode: "/images/vscode.png",
   // Add more mappings as needed
 };
 
