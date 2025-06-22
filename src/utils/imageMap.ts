@@ -1,5 +1,5 @@
 export const imageMap: Record<string, string> = {
-  kubernetes: "/images/kubernetes.svg",
+  kubernetes: "/images/kubernetes.png",
   prometheus: "/images/prometheus.png",
   grafana: "/images/grafana.svg",
   argo: "/images/argo-cd.png",
@@ -8,11 +8,23 @@ export const imageMap: Record<string, string> = {
   tekton: "/images/tekton.png",
   postgresql: "/images/postgresql.png",
   nginx: "/images/nginx.png",
-  educates: "/images/educates.svg",
+  educates: "/images/educates.png",
   spring: "/images/spring.png",
   java: "/images/java.png",
+  python: "/images/python.png",
   docker: "/images/docker.png",
   vscode: "/images/vscode.png",
+  vcluster: "/images/vcluster.png",
+  vscode_kubernetes: "/images/vscode-kubernetes.png",
+  vscode_java: "/images/vscode-java.png",
+  vscode_python: "/images/vscode-python.png",
+  vscode_educates: "/images/vscode-educates.png",
+  educates_docker: "/images/educates-docker.png",
+  educates_kubernetes: "/images/educates-kubernetes.png",
+  educates_java: "/images/educates-java.png",
+  educates_python: "/images/educates-python.png",
+  educates_vscode: "/images/educates-vscode.png",
+  educates_vcluster: "/images/educates-vcluster.png",
   // Add more mappings as needed
 };
 

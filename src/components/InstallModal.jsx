@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
+import CopyableCodeBlock from './CopyableCodeBlock';
 
 export default function InstallModal({ show, onClose, downloadUrl }) {
-  const [copyStatus, setCopyStatus] = useState('Copy');
-  const installCmdRef = useRef(null);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -21,16 +20,6 @@ export default function InstallModal({ show, onClose, downloadUrl }) {
     }
   }, [show]);
 
-  const handleCopy = () => {
-    if (installCmdRef.current) {
-      const text = installCmdRef.current.innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        setCopyStatus('Copied!');
-        setTimeout(() => setCopyStatus('Copy'), 1500);
-      });
-    }
-  };
-
   return (
     <div
       ref={modalRef}
@@ -39,7 +28,7 @@ export default function InstallModal({ show, onClose, downloadUrl }) {
       aria-labelledby="installModalLabel"
       inert={!show}
     >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
+      <div className="modal-dialog modal-dialog-centered modal-xl">
         <div className="modal-content border-primary border-2">
           <div className="modal-header">
             <h5 className="modal-title text-primary" id="installModalLabel">
@@ -54,23 +43,34 @@ export default function InstallModal({ show, onClose, downloadUrl }) {
           </div>
           <div className="modal-body">
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="fw-semibold">Install Command</span>
-              <button
-                className="btn btn-outline-secondary btn-sm"
-                type="button"
-                onClick={handleCopy}
-              >
-                {copyStatus}
-              </button>
+              If you want to install this workshop onto your own cluster, you can use the following command:
             </div>
-            <pre
-              ref={installCmdRef}
-              className="bg-light p-3 rounded small text-secondary mb-3"
-              style={{ userSelect: 'all' }}
-            >
-{`educates deploy-workshop -f ${downloadUrl}`}
-            </pre>
+            <CopyableCodeBlock
+              title="Install Command"
+              command={`educates deploy-workshop -f ${downloadUrl}`}
+            />
             {/* <div className="text-muted small">Replace <code>my-{workshopSlug}</code> with your desired release name.</div> */}
+
+            <div className="d-flex mt-3">
+              <b>NOTE:</b>&nbsp;this command will deploy the workshop onto your cluster, but you will need to add it 
+              to a TrainingPortal to make it available to your users.
+            </div>
+            <hr />
+            <div className="d-flex flex-column mt-3 mb-2">
+              <span className="modal-title text-primary">Test on a local cluster</span>
+              <div className="mt-2">If you want to test the workshop on a local cluster:</div>
+              <div className="mt-2">1. Create a local cluster.</div>
+              <CopyableCodeBlock
+                title="Create a local cluster Command"
+                command={`educates create-cluster`}
+              />
+              <div className="mt-2">2. Next, install the workshop with the previous command. In this case, a TrainingPortal will be created automatically.</div>
+              <div className="mt-2">3. Access the workshop.</div>
+              <CopyableCodeBlock
+                title="Access the workshop Command"
+                command={`educates browse-workshops`}
+              />
+            </div>
           </div>
         </div>
       </div>

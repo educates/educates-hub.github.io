@@ -1,0 +1,14 @@
+title: Using Examiner Scripts in Educates
+slug: lab-examiner-scripts
+description: How to use Examiner Scripts in Educates to validate user progress and answers.
+author: Educates Team
+image: educates
+repository:
+  org: educates
+  name: labs-educates-showcase
+  ref: "1.0.0"
+  path: workshops/lab-examiner-scripts/resources/workshop.yaml
+install_url: https://github.com/educates/labs-educates-showcase/releases/download/1.0.0/lab-examiner-scripts.yaml
+labels:
+  - educates-showcase
+  - examiner
