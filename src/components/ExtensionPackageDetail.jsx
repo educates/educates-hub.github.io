@@ -15,8 +15,7 @@ export default function ExtensionPackageDetail({ extensionPackage }) {
           files:
             - path: .
               image:
-                url: ${extensionPackage.oci_image}
-    ...`
+                url: ${extensionPackage.oci_image}`
 
   const sampleSource =
     `  apiVersion: training.educates.dev/v1beta1
@@ -30,7 +29,8 @@ export default function ExtensionPackageDetail({ extensionPackage }) {
         - image:
             url: $(image_repository)/your-workshop-files:$(workshop_version)
           path: .
-  ${sampleSourceCopyContent}`
+  ${sampleSourceCopyContent}
+    ...`
 
 
   const sampleSourceWithCacheCopyContent =

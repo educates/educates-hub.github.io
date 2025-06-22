@@ -6,7 +6,7 @@ description: |-
   - Ability to build, test Java apps using Maven or Gradle build tools.
 
   This extension does installation at startup, so that startup time is longer, but every feature is available immediately.
-image: vscode
+image: vscode_java
 author: Spring Academy Team
 date_created: 2025-06-19
 labels:
