@@ -44,6 +44,17 @@ const {
         }
       }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYX2K1Y1H2"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag('config', 'G-GYX2K1Y1H2');
+    </script>
   </head>
   <body class="min-vh-100 d-flex flex-column bg-light">
     <Topbar />
