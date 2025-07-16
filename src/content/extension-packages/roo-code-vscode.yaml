@@ -1,0 +1,13 @@
+title: Roo Code VS Code Extension Package
+description: |-
+  Provides VSCode extension for Roo Code AI assistant, adding The ability to create, share, and use custom AI code assistants
+image: vscode
+author: Educates Team
+date_created: 2025-07-16
+labels:
+  - vscode-extension
+  - ai
+version: 3.22.5
+repo_url: https://github.com/educates/educates-extension-packages
+oci_image: ghcr.io/educates/educates-extension-packages/vscode-roo-code:v3.22.5
+release_notes: Initial release with latest versions as of date of extension.

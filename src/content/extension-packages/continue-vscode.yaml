@@ -1,0 +1,16 @@
+title: Continue.dev VS Code Extension Package
+description: |-
+  Provides VSCode extension for Continue.dev AI assistant, adding The ability to create, share, and use custom AI code assistants
+
+  The extension can be configured via secrets so that when a workshop is started, the extension is configured with LLMs and/or MCPs.
+  Read more at: https://github.com/educates/educates-extension-packages/tree/main/packages/vscode-continue-dev#using-it
+image: vscode
+author: Educates Team
+date_created: 2025-07-16
+labels:
+  - vscode-extension
+  - ai
+version: 1.1.52
+repo_url: https://github.com/educates/educates-extension-packages
+oci_image: ghcr.io/educates/educates-extension-packages/vscode-continue-dev:v1.1.52
+release_notes: Initial release with latest versions as of date of extension.
