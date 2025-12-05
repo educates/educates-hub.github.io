@@ -1,0 +1,13 @@
+title: vCluster Extension Package
+description: |-
+  Provides vCluster CLI to any workshop
+image: vcluster
+author: Educates Team
+date_created: 2025-12-05
+labels:
+  - vcluster-extension
+  - kubernetes
+version: 0.30.2
+repo_url: https://github.com/educates/educates-extension-packages
+oci_image: ghcr.io/educates/educates-extension-packages/vcluster:v0.30.2
+release_notes: Initial release with latest versions as of date of extension.
