@@ -1,0 +1,89 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-educates-workshop
+spec:
+  description: Learn how to author workshops on Educates
+  session:
+    applications:
+      console:
+        enabled: false
+      docker:
+        compose:
+          services:
+            registry:
+              image: registry:2.8.3
+              ports:
+              - 0.0.0.0:5001:5000
+        enabled: true
+        socket:
+          enabled: false
+      editor:
+        enabled: true
+      registry:
+        enabled: false
+      terminal:
+        enabled: true
+        layout: split
+      vcluster:
+        enabled: true
+        services:
+          fromHost:
+          - from: $(workshop_namespace)/registry-$(session_name)
+            to: default/registry
+          - from: $(workshop_namespace)/localhost-$(session_name)
+            to: default/loopback
+    dashboards:
+    - name: Docs
+      url: https://docs.educates.dev/
+    namespaces:
+      budget: x-large
+      security:
+        policy: baseline
+        token:
+          enabled: false
+    objects:
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        name: registry-$(session_name)
+        namespace: $(workshop_namespace)
+      spec:
+        ports:
+        - name: registry
+          port: 80
+          protocol: TCP
+          targetPort: 5001
+        selector:
+          deployment: $(session_name)
+        type: ClusterIP
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        name: localhost-$(session_name)
+        namespace: $(workshop_namespace)
+      spec:
+        ports:
+        - name: renderer
+          port: 10081
+          protocol: TCP
+          targetPort: 10081
+        selector:
+          deployment: $(session_name)
+        type: ClusterIP
+  title: Educates Workshop
+  version: "1.0"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/educates/lab-educates-workshop-files:1.0
+      includePaths:
+      - /workshop/**
+      - /exercises/**
+      - /README.md
+    packages:
+    - files:
+      - image:
+          url: ghcr.io/educates/educates-extension-packages/educates:v3.5.1
+        path: .
+      name: educates

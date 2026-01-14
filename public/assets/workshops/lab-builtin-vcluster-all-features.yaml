@@ -1,0 +1,54 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-builtin-vcluster-all-features
+spec:
+  description: Test of using builtin support for creating a virtual cluster with all
+    features.
+  session:
+    applications:
+      console:
+        enabled: true
+      editor:
+        enabled: true
+      files:
+        enabled: true
+      terminal:
+        enabled: true
+        layout: split
+      vcluster:
+        enabled: true
+        ingress:
+          enabled: true
+          subdomains:
+          - default
+        objects:
+        - apiVersion: v1
+          data:
+            INGRESS_DOMAIN: $(ingress_domain)
+            SESSION_NAMESPACE: $(session_namespace)
+          kind: ConfigMap
+          metadata:
+            name: session-details
+            namespace: default
+        resources:
+          syncer:
+            memory: 2Gi
+        services:
+          fromHost:
+          - from: kyverno/kyverno-svc-metrics
+            to: default/kyverno-svc-metrics
+          fromVirtual:
+          - from: default/nginx
+            to: my-internal-nginx-svc
+    namespaces:
+      budget: x-large
+      security:
+        token:
+          enabled: false
+  title: Test of builtin virtual cluster with all features
+  version: "2.0"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/labs-vcluster-testing/lab-builtin-vcluster-all-features-files:2.0

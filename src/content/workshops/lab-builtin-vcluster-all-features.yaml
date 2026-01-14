@@ -1,0 +1,17 @@
+title: Builtin Virtual Cluster - All Features
+slug: lab-builtin-vcluster-all-features
+description: A workshop demonstrating creation of a virtual cluster with all the potential vcluster configuration per workshop session using the builtin support provided by Educates.
+author: Educates Team
+image: educates_vcluster
+repository:
+  org: educates
+  name: labs-vcluster-testing
+  ref: "2.0"
+  path: workshops/lab-builtin-vcluster-all-features/resources/workshop.yaml
+install_url: https://github.com/educates/labs-vcluster-testing/releases/download/2.0/lab-builtin-vcluster-all-features.yaml
+labels:
+  - educates-showcase
+  - vcluster
+  - virtual-cluster
+  - workshop
+  - advanced
