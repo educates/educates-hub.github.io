@@ -1,0 +1,18 @@
+title: Add Resources to Virtual Cluster
+slug: lab-add-resources-to-vcluster
+description: A workshop demonstrating how to prepopulate a virtual cluster with resources, including installation of kapp-controller in that virtual cluster.
+author: Educates Team
+image: educates_vcluster
+repository:
+  org: educates
+  name: labs-vcluster-testing
+  ref: "2.0"
+  path: workshops/lab-add-resources-to-vcluster/resources/workshop.yaml
+install_url: https://github.com/educates/labs-vcluster-testing/releases/download/2.0/lab-add-resources-to-vcluster.yaml
+labels:
+  - educates-showcase
+  - vcluster
+  - virtual-cluster
+  - workshop
+  - resources
+  - kapp-controller

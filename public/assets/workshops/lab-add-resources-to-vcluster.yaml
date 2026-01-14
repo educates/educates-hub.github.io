@@ -1,0 +1,120 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-add-resources-to-vcluster
+spec:
+  description: Test of how to add resources to a virtual cluster.
+  session:
+    applications:
+      console:
+        enabled: true
+      editor:
+        enabled: true
+      files:
+        enabled: true
+      git:
+        enabled: true
+      terminal:
+        enabled: true
+        layout: split
+      vcluster:
+        enabled: true
+        objects:
+        - apiVersion: v1
+          kind: Secret
+          metadata:
+            name: git-credentials-1
+            namespace: default
+          stringData:
+            GIT_HOST: $(git_host)
+            GIT_PASSWORD: $(git_password)
+            GIT_PROTOCOL: $(git_protocol)
+            GIT_USERNAME: $(git_username)
+    namespaces:
+      budget: medium
+      security:
+        token:
+          enabled: false
+    objects:
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: kapp-controller
+        namespace: $(session_namespace)-vc
+      spec:
+        cluster:
+          kubeconfigSecretRef:
+            key: config
+            name: $(vcluster_secret)
+          namespace: default
+        deploy:
+        - kapp: {}
+        fetch:
+        - http:
+            url: https://github.com/carvel-dev/kapp-controller/releases/download/v0.59.1/release.yml
+        noopDelete: true
+        syncPeriod: 24h
+        template:
+        - ytt: {}
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: credentials-data-values
+        namespace: $(session_namespace)-vc
+      stringData:
+        values.yaml: |
+          GIT_PROTOCOL: $(git_protocol)
+          GIT_HOST: $(git_host)
+          GIT_USERNAME: $(git_username)
+          GIT_PASSWORD: $(git_password)
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: git-credentials-2
+        namespace: $(session_namespace)-vc
+      spec:
+        cluster:
+          kubeconfigSecretRef:
+            key: config
+            name: $(vcluster_secret)
+          namespace: default
+        deploy:
+        - kapp: {}
+        fetch:
+        - image:
+            url: ghcr.io/educates/labs-vcluster-testing/lab-setup-vcluster-files:2.0
+        noopDelete: true
+        syncPeriod: 24h
+        template:
+        - ytt:
+            paths:
+            - templates/git-credentials-2.yaml
+            valuesFrom:
+            - secretRef:
+                name: credentials-data-values
+    - apiVersion: kappctrl.k14s.io/v1alpha1
+      kind: App
+      metadata:
+        name: git-credentials-3
+        namespace: $(session_namespace)-vc
+      spec:
+        cluster:
+          kubeconfigSecretRef:
+            key: config
+            name: $(vcluster_secret)
+          namespace: default
+        deploy:
+        - kapp: {}
+        fetch:
+        - http:
+            url: $(session_url)/files/objects/git-credentials-3.yaml?token=$(services_password)
+        noopDelete: true
+        syncPeriod: 24h
+        template:
+        - ytt: {}
+  title: Test of adding resources to a virtual cluster
+  version: "2.0"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/labs-vcluster-testing/lab-add-resources-to-vcluster-files:2.0

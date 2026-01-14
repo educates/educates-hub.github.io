@@ -6,7 +6,7 @@ date_created: 2025-05-26
 labels:
   - educates
   - cli
-version: 3.3.2
+version: 3.5.1
 repo_url: https://github.com/educates/educates-extension-packages
-oci_image: ghcr.io/educates/educates-extension-packages/educates:v3.3.2
-release_notes: Initial release with latest versions of the Educates CLI.
+oci_image: ghcr.io/educates/educates-extension-packages/educates:v3.5.1
+release_notes: Latest versions of the Educates CLI.

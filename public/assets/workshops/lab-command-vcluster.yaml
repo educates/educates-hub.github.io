@@ -1,0 +1,58 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: lab-command-vcluster
+spec:
+  description: Test of creating a virtual cluster using the vcluster CLI
+  session:
+    applications:
+      console:
+        enabled: false
+      editor:
+        enabled: true
+      files:
+        enabled: true
+      terminal:
+        enabled: true
+        layout: split
+      vcluster:
+        enabled: false
+    namespaces:
+      budget: large
+      security:
+        policy: baseline
+    objects:
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: $(session_name)-vc
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: edit
+      subjects:
+      - kind: ServiceAccount
+        name: $(service_account)
+        namespace: $(session_namespace)
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        annotations:
+          meta.helm.sh/release-name: $(session_name)
+          meta.helm.sh/release-namespace: $(session_namespace)
+        labels:
+          app.kubernetes.io/managed-by: Helm
+        name: $(service_account)
+        namespace: $(session_namespace)
+  title: Test of using the vCluster CLI
+  version: "2.0"
+  workshop:
+    files:
+    - image:
+        url: ghcr.io/educates/labs-vcluster-testing/lab-command-vcluster-files:2.0
+    packages:
+    - files:
+      - image:
+          url: ghcr.io/educates/educates-extension-packages/vcluster:v0.30.3
+        path: .
+      name: vcluster

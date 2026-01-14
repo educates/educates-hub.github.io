@@ -1,0 +1,16 @@
+title: Command Virtual Cluster
+slug: lab-command-vcluster
+description: A workshop demonstrating creation of a virtual cluster using the vcluster CLI.
+author: Educates Team
+image: educates_vcluster
+repository:
+  org: educates
+  name: labs-vcluster-testing
+  ref: "2.0"
+  path: workshops/lab-command-vcluster/resources/workshop.yaml
+install_url: https://github.com/educates/labs-vcluster-testing/releases/download/2.0/lab-command-vcluster.yaml
+labels:
+  - educates-showcase
+  - vcluster
+  - virtual-cluster
+  - extension-package
